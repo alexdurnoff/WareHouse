@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+group 'ru.durnov'
+version '1.0-SNAPSHOT'
+
+mainClassName = "ru.durnov.warehouse.ui.WareHouseApplication"
+
+jar {
+    manifest {
+        attributes "Main-Class": "ru.durnov.warehouse.ui.WareHouseApplication"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

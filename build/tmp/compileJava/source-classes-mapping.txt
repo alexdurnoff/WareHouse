@@ -1,0 +1,44 @@
+ru/durnov/warehouse/ui/AbstractPane.java
+ ru.durnov.warehouse.ui.AbstractPane
+ru/durnov/warehouse/entity/Entity.java
+ ru.durnov.warehouse.entity.Entity
+ru/durnov/warehouse/dao/DummyProductDaoImpl.java
+ ru.durnov.warehouse.dao.DummyProductDaoImpl
+ru/durnov/warehouse/ui/CustomerPane.java
+ ru.durnov.warehouse.ui.CustomerPane
+ru/durnov/warehouse/dao/CustomerDao.java
+ ru.durnov.warehouse.dao.CustomerDao
+ru/durnov/warehouse/entity/Customer.java
+ ru.durnov.warehouse.entity.Customer
+ru/durnov/warehouse/dao/DummyStoreDaoImpl.java
+ ru.durnov.warehouse.dao.DummyStoreDaoImpl
+ru/durnov/warehouse/ui/OrderArchivPane.java
+ ru.durnov.warehouse.ui.OrderArchivPane
+ ru.durnov.warehouse.ui.OrderArchivPane$PrintButton
+ru/durnov/warehouse/entity/Store.java
+ ru.durnov.warehouse.entity.Store
+ru/durnov/warehouse/ui/OrderForm.java
+ ru.durnov.warehouse.ui.OrderForm
+ru/durnov/warehouse/ui/ProductPane.java
+ ru.durnov.warehouse.ui.ProductPane
+ ru.durnov.warehouse.ui.ProductPane$EditProductButton
+ ru.durnov.warehouse.ui.ProductPane$RemoveProductButton
+ru/durnov/warehouse/dao/StoreDao.java
+ ru.durnov.warehouse.dao.StoreDao
+ru/durnov/warehouse/dao/ProductDao.java
+ ru.durnov.warehouse.dao.ProductDao
+ru/durnov/warehouse/entity/Product.java
+ ru.durnov.warehouse.entity.Product
+ru/durnov/warehouse/dao/EntityDao.java
+ ru.durnov.warehouse.dao.EntityDao
+ru/durnov/warehouse/entity/Order.java
+ ru.durnov.warehouse.entity.Order
+ru/durnov/warehouse/dao/DummyCustomerDaoImpl.java
+ ru.durnov.warehouse.dao.DummyCustomerDaoImpl
+ru/durnov/warehouse/ui/StorePane.java
+ ru.durnov.warehouse.ui.StorePane
+ ru.durnov.warehouse.ui.StorePane$RemoveStoreButton
+ru/durnov/warehouse/ui/WareHouseApplication.java
+ ru.durnov.warehouse.ui.WareHouseApplication
+ru/durnov/warehouse/dao/DummyOrderDaoImpl.java
+ ru.durnov.warehouse.dao.DummyOrderDaoImpl
