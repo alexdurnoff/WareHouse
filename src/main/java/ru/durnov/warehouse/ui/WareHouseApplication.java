@@ -1,6 +1,8 @@
 package ru.durnov.warehouse.ui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -72,19 +74,42 @@ public class WareHouseApplication extends Application {
     private void showPane(AbstractPane pane){
         removeScrollPaneIfExists();
         removeAllButtons();
-        int i = 0;
+        int i = 1;
+        Button rootButton = new Button("Главное окно");
+        this.rootNode.add(rootButton, 0, 0);
+        rootButton.setOnAction(ae -> backToTheStartWindow());
         if (pane.getAddEntityButton() != null){
             pane.getAddEntityButton().setOnAction(ae -> pane.addEntityToEntityList());
-            this.rootNode.add(pane.getAddEntityButton(),0, i);
+            this.buttonList.add(pane.getAddEntityButton());
+            this.rootNode.add(pane.getAddEntityButton(), i, 0);
             i++;
         }
+        if (pane.getClass() == OrderForm.class){
+            OrderForm orderForm = (OrderForm) pane;
+            Button saveButton = new Button("Сохранить");
+            Button printButton = new Button("Печать");
+            saveButton.setOnAction(ae -> orderForm.save());
+            this.rootNode.add(saveButton,i, 0);
+            i++;
+            printButton.setOnAction(ae -> orderForm.print());
+            this.rootNode.add(printButton, i, 0);
+            this.buttonList.add(saveButton);
+            this.buttonList.add(printButton);
+        }
         this.scrollPane = new ScrollPane(pane);
-        this.rootNode.add(this.scrollPane, 0, i, 4, 1);
+        this.rootNode.add(this.scrollPane, 0, 1, 4, 1);
         pane.show();
+    }
+
+    private void backToTheStartWindow() {
+        this.rootNode.getChildren().remove(this.scrollPane);
+        removeAllButtons();
+        addButtons();
     }
 
     private void removeAllButtons() {
         for (Button button : buttonList) rootNode.getChildren().remove(button);
+        this.buttonList = new ArrayList<>();
     }
 
     public void removeScrollPaneIfExists() {
@@ -94,4 +119,5 @@ public class WareHouseApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
