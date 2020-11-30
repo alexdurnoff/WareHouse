@@ -1,6 +1,7 @@
 package ru.durnov.warehouse.ui;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -97,17 +98,23 @@ public class OrderForm extends AbstractPane {
         Label coastLabel = new Label(String.format("%.2f", product.getCoast()));
         Label sumLabel = new Label(String.format("%.2f", product.getCoast()*weigth));
         weigthTextField.setOnAction(ae ->{
-            double productWeigth = Double.parseDouble(weigthTextField.getText().replace(',', '.'));
-            double productCoast = Double.parseDouble(coastLabel.getText().replace(',', '.'));
-            double sum = productWeigth*productCoast;
-            String sumString = String.format("%.2f", sum);
-            sumLabel.setText(sumString);
+            try {
+                double productWeigth = Double.parseDouble(weigthTextField.getText().replace(',', '.'));
+                double productCoast = Double.parseDouble(coastLabel.getText().replace(',', '.'));
+                double sum = productWeigth*productCoast;
+                String sumString = String.format("%.2f", sum);
+                sumLabel.setText(sumString);
+            } catch (NumberFormatException e) {
+                NumberFormatExceptionWindow.show();
+            }
         });
         this.add(weigthTextField, 2, rowCount);
         this.add(coastLabel, 3, rowCount);
         this.add(sumLabel, 4, rowCount);
         rowCount++;
     }
+
+
 
     public void addProduct(Product product, Double weigth){
         this.order.addProduct(product, weigth);
