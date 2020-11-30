@@ -41,67 +41,17 @@ public class OrderForm extends AbstractPane {
 
     @Override
     public void addEntityToEntityList() {
-        GridPane rootNode = new GridPane();
-        GridPane productChooser = new GridPane();
-        productChooser.setAlignment(Pos.CENTER);
-        productChooser.setPrefWidth(400);
-        productChooser.setGridLinesVisible(true);
-        ScrollPane scrollPane = new ScrollPane(productChooser);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane.setFitToWidth(true);
-        Scene scene = new Scene(rootNode, 450, 400);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        Set<Product> choosedProductSet = new HashSet<>();
-        Button buttonOk = new Button("Ok");
-        buttonOk.setOnAction(ae ->{
-            choosedProductSet.forEach(p -> this.order.addProduct(p, 0.));
-            stage.close();
-            this.refresh();
-        });
-        rootNode.add(buttonOk,0,0);
-        rootNode.add(scrollPane, 0, 1);
-        addHeaderProductChooserLine(productChooser);
-        for (int i = 1; i < productList.size(); i++){
-            Product product = (Product) productList.get(i);
-            Label label = new Label(product.getTitle());
-            productChooser.add(label, 0, i +1);
-            label = new Label(String.format("%.2f", product.getCoast()));
-            productChooser.add(label, 1, i + 1);
-            ProductCheckBox productCheckBox = new ProductCheckBox(product);
-            productCheckBox.setOnAction(ae -> choosedProductSet.add(productCheckBox.getProduct()));
-            productChooser.add(productCheckBox, 2, i +1);
-        }
-        stage.show();
+        new ProductChooserPane(this).addEntityToEntityList();
     }
 
-    private void addHeaderProductChooserLine(GridPane productChooser) {
-        Label label = new Label("Наименование товара");
-        productChooser.add(label, 0, 0);
-        label = new Label("Стоимость товара");
-        productChooser.add(label, 1, 0);
-        label = new Label("Выбрать товар");
-        productChooser.add(label, 2, 0);
-    }
-
-    private void refresh() {
+    void refresh() {
         this.getChildren().clear();
         this.rowCount = 0;
         this.show();
     }
 
-    private void setColumns(){
-        ObservableList<ColumnConstraints> columns = this.getColumnConstraints();
-        for (int i = 0; i < 4; i++) {
-            ColumnConstraints column = new ColumnConstraints();
-            column.setHalignment(HPos.CENTER);
-            columns.add(column);
-        }
-    }
-
     @Override
     public void show(){
-        //addEmptyLines();
         addheaderLine();
         addProductLines();
         this.setGridLinesVisible(true);
@@ -132,19 +82,6 @@ public class OrderForm extends AbstractPane {
         this.add(label,4, 0);
         rowCount = 1;
     }
-
-    private void addEmptyLines(){
-        for (int i = 1; i < 15; i++){
-            Label label = new Label(String.valueOf(i));
-            label.setPrefWidth(30);
-            label.setAlignment(Pos.CENTER);
-            this.add(label,0, i);
-            this.add(new TextField(""), 1, i);
-            this.add(new TextField(""), 2, i);
-            this.add(new TextField(""), 3, i);
-            this.add(new TextField(""), 4, i);
-        }
-    }
     
     private void addProductLines(){
         this.order.getProductWeigthMap().forEach(this::addproductLine);
@@ -172,7 +109,9 @@ public class OrderForm extends AbstractPane {
         rowCount++;
     }
 
-
+    public void addProduct(Product product, Double weigth){
+        this.order.addProduct(product, weigth);
+    }
 
 
     public void print() {
@@ -196,5 +135,9 @@ public class OrderForm extends AbstractPane {
         orderDao.addEntity(order);
     }
 
+    public Order getOrder(){return this.order;}
 
+    public List<Entity> getProductList() {
+        return productList;
+    }
 }
