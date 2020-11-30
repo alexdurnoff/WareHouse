@@ -26,6 +26,11 @@ public class StorePane extends AbstractPane {
         this.addStore = new Button("Добавить магазин");
     }
 
+    public void refresh(){
+        this.getChildren().clear();
+        this.show();
+    }
+
     public void constructNewStore(){
 
     }
@@ -66,8 +71,9 @@ public class StorePane extends AbstractPane {
     }
 
     private void removeStoreFromStoreList(Store store) {
-        this.storeDao.getEntityByTitle(store.getTitle());
+        this.storeDao.removeEntityByTitle(store.getTitle());
         this.storeList = this.storeDao.getAllEntity();
+        this.refresh();
     }
 
     public Button getAddStore() {
