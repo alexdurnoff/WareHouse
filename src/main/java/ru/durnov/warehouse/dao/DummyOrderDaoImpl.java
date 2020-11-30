@@ -28,7 +28,7 @@ public class DummyOrderDaoImpl implements EntityDao {
             List<Entity> entityList = productDao.getAllEntity();
             for (int i = 0; i <entityList.size(); i++){
                 Product product = (Product) entityList.get(i);
-                order.addProduct(product);
+                order.addProduct(product, 1.0);
             }
         }
     }

@@ -4,6 +4,10 @@ public class Product extends Entity{
     private double weight;
     private double coast;
 
+    public Product(String title){
+        super(title);
+    }
+
     public Product(String title, double coast){
         super(title);
         this.coast = coast;

@@ -11,6 +11,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.dao.*;
+import ru.durnov.warehouse.entity.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class WareHouseApplication extends Application {
         Button storeButton = new Button("База магазинов");
         storeButton.setOnAction(ae -> showPane(new StorePane(this.storeDao)));
         Button orderButton = new Button("Создать накладную");
-        orderButton.setOnAction(ae -> showPane(new OrderForm()));
+        orderButton.setOnAction(ae -> showPane(new OrderForm(this.orderDao, this.productDao)));
         Button orderArchivButton = new Button("Архив накладных");
         orderArchivButton.setOnAction(ae -> showPane(new OrderArchivPane(this.orderDao)));
         rootNode.add(productButton, 0,0);
