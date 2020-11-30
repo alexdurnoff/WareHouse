@@ -24,9 +24,15 @@ public class ProductPane extends AbstractPane {
         this.productList = productDao.getAllEntity();
     }
 
-    private void removeProductFromProductList(Product product) {
+    public void removeEntityByTitle(Entity product) {
         this.productDao.removeEntityByTitle(product.getTitle());
         this.productList = productDao.getAllEntity();
+    }
+
+    @Override
+    public void refresh() {
+        this.getChildren().clear();
+        this.show();
     }
 
     @Override
@@ -76,6 +82,12 @@ public class ProductPane extends AbstractPane {
             this.product = product;
             this.setOnAction(ae -> removeProductFromProductList(this.product));
         }
+    }
+
+    private void removeProductFromProductList(Product product) {
+        String message = "Вы уверены, что хотите удалить этот продукт?";
+        new AYouSurePane(message, this, product).show();
+        this.productList = this.productDao.getAllEntity();
     }
 
     class EditProductButton extends Button{

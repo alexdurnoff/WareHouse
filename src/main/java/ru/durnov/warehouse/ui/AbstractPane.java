@@ -31,4 +31,8 @@ public abstract class AbstractPane extends GridPane {
     public abstract void addEntityToEntityList();
 
     public abstract void show();
+
+    public abstract void removeEntityByTitle(Entity entity);
+
+    public abstract void refresh();
 }

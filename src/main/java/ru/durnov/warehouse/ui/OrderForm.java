@@ -14,6 +14,7 @@ import ru.durnov.warehouse.entity.Store;
 import java.util.List;
 
 public class OrderForm extends AbstractPane {
+    private final EntityDao productDao;
     private final List<Entity> productList;
     private final EntityDao orderDao;
     private final EntityDao storeDao;
@@ -25,6 +26,7 @@ public class OrderForm extends AbstractPane {
     public OrderForm(EntityDao orderDao, EntityDao productDao, EntityDao storeDao){
         super();
         super.setEntityButtonTitle("Добавить товар");
+        this.productDao = productDao;
         this.orderDao = orderDao;
         this.storeDao = storeDao;
         this.store = (Store) storeDao.getAllEntity().get(0);
@@ -44,7 +46,7 @@ public class OrderForm extends AbstractPane {
         new ProductChooserPane(this).addEntityToEntityList();
     }
 
-    void refresh() {
+    public void refresh() {
         this.getChildren().clear();
         this.rowCount = 0;
         this.show();
@@ -56,6 +58,12 @@ public class OrderForm extends AbstractPane {
         addProductLines();
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    @Override
+    public void removeEntityByTitle(Entity entity) {
+        this.productDao.removeEntityByTitle(entity.getTitle());
+        this.productList.remove(entity);
     }
 
     private void addheaderLine() {

@@ -9,6 +9,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.dao.CustomerDao;
 import ru.durnov.warehouse.entity.Customer;
+import ru.durnov.warehouse.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,16 @@ public class CustomerPane extends AbstractPane {
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    @Override
+    public void removeEntityByTitle(Entity entity) {
+
+    }
+
+    @Override
+    public void refresh() {
+
     }
 
     @Override

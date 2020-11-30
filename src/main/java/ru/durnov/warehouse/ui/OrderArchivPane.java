@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import ru.durnov.warehouse.dao.EntityDao;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
+import ru.durnov.warehouse.entity.Store;
 
 import java.util.List;
 
@@ -42,10 +43,23 @@ public class OrderArchivPane extends AbstractPane {
             this.add(label,0, i);
             this.add(new TextField(orderList.get(i).getTitle()), 1, i);
             this.add(new PrintButton(order), 2, i);
+            this.add(new RemoveOrderButton(order), 3, i);
         }
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    @Override
+    public void removeEntityByTitle(Entity entity) {
+        this.orderDao.removeEntityByTitle(entity.getTitle());
+        this.orderList.remove(entity);
+    }
+
+    @Override
+    public void refresh() {
+        this.getChildren().clear();
+        this.show();
     }
 
     class PrintButton extends Button{
@@ -59,5 +73,21 @@ public class OrderArchivPane extends AbstractPane {
 
     private void printOrder(Order order) {
         System.out.println(order);
+    }
+
+    class RemoveOrderButton extends Button{
+        private Order order;
+
+        RemoveOrderButton(Order order){
+            super("Удалить накладную");
+            this.order = order;
+            this.setOnAction(ae -> removeOrderFromOrderList(this.order));
+        }
+    }
+
+    private void removeOrderFromOrderList(Order order) {
+        String message = "Вы уверены, что хотите удалить эту накладную?";
+        new AYouSurePane(message, this, order).show();
+        this.orderList = this.orderDao.getAllEntity();
     }
 }

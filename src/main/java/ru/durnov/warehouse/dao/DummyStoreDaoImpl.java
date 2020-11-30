@@ -36,7 +36,8 @@ public class DummyStoreDaoImpl implements EntityDao {
 
     @Override
     public void removeEntityByTitle(String title) {
-        for ( int i = 0; i < this.storeList.size(); i++){
+        int size = this.storeList.size();
+        for ( int i = 0; i < size; i++){
             if(this.storeList.get(i).getTitle().equals(title)) this.storeList.remove(i);
         }
     }
