@@ -3,20 +3,23 @@ package ru.durnov.warehouse.dao;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
+import ru.durnov.warehouse.entity.Store;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DummyOrderDaoImpl implements EntityDao {
     private List<Entity> orderList;
+    private List<Entity> storeList;
 
     public DummyOrderDaoImpl(){
         this.orderList = new ArrayList<>();
-        Order order1 = new Order(1);
+        this.storeList = new DummyStoreDaoImpl().getAllEntity();
+        Order order1 = new Order(1, (Store) this.storeList.get(0));
         orderList.add(order1);
-        Order order2 = new Order(2);
+        Order order2 = new Order(2, (Store) this.storeList.get(1));
         orderList.add(order2);
-        Order order3 = new Order(3);
+        Order order3 = new Order(3, (Store) this.storeList.get(2));
         orderList.add(order3);
         setupOrders();
     }

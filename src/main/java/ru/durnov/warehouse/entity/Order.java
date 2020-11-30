@@ -7,13 +7,15 @@ public class Order extends Entity {
     private Map<Product,Double> productWeigthMap;
     private int number;
     private Date date;
+    private Store store;
 
 
-    public Order(int number) {
+    public Order(int number, Store store) {
         super("");
         super.SetTitle("Накладная № " + number);
         this.productList = new ArrayList<>();
         this.productWeigthMap = new HashMap<>();
+        this.store = store;
     }
 
     public void addProduct(Product product, Double weigth){

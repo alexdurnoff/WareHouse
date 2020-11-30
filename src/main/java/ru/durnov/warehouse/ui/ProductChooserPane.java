@@ -34,6 +34,7 @@ public class ProductChooserPane {
         scrollPane.setFitToWidth(true);
         Scene scene = new Scene(rootNode, 450, 400);
         Stage stage = new Stage();
+        stage.setTitle("Добавление товара");
         stage.setScene(scene);
         Set<Product> choosedProductSet = new HashSet<>();
         Button buttonOk = new Button("Ok");

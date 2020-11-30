@@ -59,7 +59,7 @@ public class WareHouseApplication extends Application {
         Button storeButton = new Button("База магазинов");
         storeButton.setOnAction(ae -> showPane(new StorePane(this.storeDao)));
         Button orderButton = new Button("Создать накладную");
-        orderButton.setOnAction(ae -> showPane(new OrderForm(this.orderDao, this.productDao)));
+        orderButton.setOnAction(ae -> showPane(new OrderForm(this.orderDao, this.productDao, this.storeDao)));
         Button orderArchivButton = new Button("Архив накладных");
         orderArchivButton.setOnAction(ae -> showPane(new OrderArchivPane(this.orderDao)));
         rootNode.add(productButton, 0,0);
