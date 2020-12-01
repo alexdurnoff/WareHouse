@@ -28,12 +28,13 @@ public class StorePane extends AbstractPane {
     }*/
 
     public void constructNewStore(){
-        Store store = new Store("");
+        new StoreCreator(this).show();
     }
 
     @Override
     public void addEntityToEntityList() {
         constructNewStore();
+        this.storeList = this.entityDao.getAllEntity();
     }
 
     @Override
