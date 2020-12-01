@@ -51,6 +51,8 @@ public class OrderArchivPane extends AbstractPane {
         this.setWidth(USE_PREF_SIZE);
     }
 
+
+
     /*@Override
     public void removeEntityByTitle(Entity entity) {
         this.entityDao.removeEntityByTitle(entity.getTitle());

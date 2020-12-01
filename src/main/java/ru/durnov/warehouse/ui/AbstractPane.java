@@ -48,6 +48,7 @@ public abstract class AbstractPane extends GridPane {
         this.show();
     }
 
+
     protected class RemoveEntityButton extends Button{
         private Entity entity;
 

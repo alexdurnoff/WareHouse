@@ -19,7 +19,7 @@ public class StorePane extends AbstractPane {
         this.entityDao = storeDao;
         this.storeList = storeDao.getAllEntity();
         this.message = "Вы действительно хотите удалить этот магазин?";
-        this.removeEntityMessage = "Удалить магазин";
+        this.removeEntityMessage = "Удалить";
     }
 
     /*public void refresh(){
@@ -40,11 +40,27 @@ public class StorePane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i);
             this.add(new TextField(storeList.get(i).getTitle()), 1, i);
-            this.add(new RemoveEntityButton(store), 2, i);
+            this.add(new EditStoreButton(store), 2, i);
+            this.add(new RemoveEntityButton(store), 3, i);
         }
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    class EditStoreButton extends Button {
+        private Store store;
+
+        EditStoreButton(Store store){
+            super("Редактировать магазин");
+            this.store = store;
+            this.setOnAction(ae -> editStore(store));
+        }
+
+    }
+
+    private void editStore(Store store) {
+        new StoreEditor(this, store).show();
     }
 
     /*class RemoveEntityButton extends Button{

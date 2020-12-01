@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ProductPane extends AbstractPane {
     private List<Entity> productList;
-    //private EntityDao productDao;
 
     public ProductPane(EntityDao productDao){
         super();
@@ -22,17 +21,6 @@ public class ProductPane extends AbstractPane {
         this.message = "Вы уверены, что хотите удалить этот продукт?";
         this.removeEntityMessage = "Удалить продукт";
     }
-
-    /*public void removeEntityByTitle(Entity product) {
-        this.entityDao.removeEntityByTitle(product.getTitle());
-        this.productList = entityDao.getAllEntity();
-    }*/
-
-    /*@Override
-    public void refresh() {
-        this.getChildren().clear();
-        this.show();
-    }*/
 
     @Override
     public void addEntityToEntityList() {
@@ -62,22 +50,6 @@ public class ProductPane extends AbstractPane {
         this.setWidth(USE_PREF_SIZE);
     }
 
-    /*class RemoveEntityButton extends Button {
-        private Product product;
-
-        RemoveEntityButton(Product product){
-            super("Удалить товар");
-            this.product = product;
-            this.setOnAction(ae -> removeEntityFromEntityList(this.product));
-        }
-    }*/
-
-   /* private void removeEntityFromEntityList(Product product) {
-        //String message = "Вы уверены, что хотите удалить этот продукт?";
-        new AYouSurePane(message, this, product).show();
-        this.productList = this.entityDao.getAllEntity();
-    }*/
-
     class EditProductButton extends Button{
         private Product product;
 
@@ -89,6 +61,7 @@ public class ProductPane extends AbstractPane {
     }
 
     private void editProduct(Product product) {
+        new ProductEditor(this, product).show();
     }
 
 }
