@@ -29,6 +29,7 @@ public class ProductPane extends AbstractPane {
     }
 
     private void constructNewProduct() {
+        new ProductCreator(this).show();
     }
 
     @Override

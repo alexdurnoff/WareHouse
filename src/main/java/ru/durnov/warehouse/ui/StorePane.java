@@ -28,7 +28,12 @@ public class StorePane extends AbstractPane {
     }*/
 
     public void constructNewStore(){
+        Store store = new Store("");
+    }
 
+    @Override
+    public void addEntityToEntityList() {
+        constructNewStore();
     }
 
     @Override
@@ -40,7 +45,7 @@ public class StorePane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i);
             this.add(new TextField(storeList.get(i).getTitle()), 1, i);
-            this.add(new EditStoreButton(store), 2, i);
+            //this.add(new EditStoreButton(store), 2, i);
             this.add(new RemoveEntityButton(store), 3, i);
         }
         this.setGridLinesVisible(true);

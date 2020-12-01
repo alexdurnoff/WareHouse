@@ -32,9 +32,7 @@ public abstract class AbstractPane extends GridPane {
         this.addEntityButton = button;
     }
 
-    public void addEntityToEntityList(){
-
-    };
+    public abstract void addEntityToEntityList();
 
     public abstract void show();
 
