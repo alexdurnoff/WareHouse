@@ -27,12 +27,12 @@ public class ProductChooserPane {
         GridPane rootNode = new GridPane();
         GridPane productChooser = new GridPane();
         productChooser.setAlignment(Pos.CENTER);
-        productChooser.setPrefWidth(400);
-        productChooser.setGridLinesVisible(true);
+        productChooser.setPrefWidth(800);
+        productChooser.setHgap(20);
         ScrollPane scrollPane = new ScrollPane(productChooser);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setFitToWidth(true);
-        Scene scene = new Scene(rootNode, 450, 400);
+        Scene scene = new Scene(rootNode, 800, 400);
         Stage stage = new Stage();
         stage.setTitle("Добавление товара");
         stage.setScene(scene);
@@ -44,26 +44,33 @@ public class ProductChooserPane {
             stage.close();
 
         });
-        rootNode.add(buttonOk,0,0);
         rootNode.add(scrollPane, 0, 1);
         addHeaderProductChooserLine(productChooser);
-        for (int i = 1; i < productList.size(); i++){
+        int i;
+        for (i = 1; i < productList.size(); i++){
             Product product = (Product) productList.get(i);
             Label label = new Label(product.getTitle());
+            label.setPrefHeight(40);
+            label.setPrefWidth(450);
             productChooser.add(label, 0, i +1);
             label = new Label(String.format("%.2f", product.getCoast()));
+            label.setAlignment(Pos.CENTER);
             productChooser.add(label, 1, i + 1);
             ProductCheckBox productCheckBox = new ProductCheckBox(product);
             productCheckBox.setOnAction(ae -> choosedProductSet.add(productCheckBox.getProduct()));
             productChooser.add(productCheckBox, 2, i +1);
         }
+        i++;
+        productChooser.add(buttonOk,0,i+1);
         stage.show();
     }
 
     private void addHeaderProductChooserLine(GridPane productChooser) {
         Label label = new Label("Наименование товара");
+        label.setAlignment(Pos.CENTER);
         productChooser.add(label, 0, 0);
         label = new Label("Стоимость товара");
+        label.setAlignment(Pos.CENTER);
         productChooser.add(label, 1, 0);
         label = new Label("Выбрать товар");
         productChooser.add(label, 2, 0);

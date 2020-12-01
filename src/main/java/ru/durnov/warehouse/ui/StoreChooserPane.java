@@ -22,15 +22,16 @@ public class StoreChooserPane {
     }
 
 
-    public void setStoreForOrderpane() {
+    public void setStoreForOrderPane() {
         GridPane rootNode = new GridPane();
+        rootNode.setGridLinesVisible(false);
         GridPane storeChooser = new GridPane();
         storeChooser.setAlignment(Pos.CENTER);
-        storeChooser.setPrefWidth(400);
-        storeChooser.setGridLinesVisible(true);
+        storeChooser.setPrefWidth(450);
+        storeChooser.setAlignment(Pos.TOP_CENTER);
         ScrollPane scrollPane = new ScrollPane(storeChooser);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setFitToWidth(true);
+        //scrollPane.setPrefViewportHeight(380);
         Scene scene = new Scene(rootNode, 450, 400);
         Stage stage = new Stage();
         stage.setTitle("Выбор магазина для накладной");
@@ -44,23 +45,28 @@ public class StoreChooserPane {
             this.orderForm.refresh();
             stage.close();
         });
-        rootNode.add(buttonOk, 0, 0);
-        rootNode.add(scrollPane, 0, 1);
+        rootNode.add(scrollPane, 0, 0);
         addHeaderProductChooserLine(storeChooser);
-        for (int i = 1; i < storeList.size(); i++){
+        int i;
+        for (i = 0; i < storeList.size(); i++){
             Store store = (Store) storeList.get(i);
             Label label = new Label(store.getTitle());
+            label.setPrefWidth(200);
+            label.setPrefHeight(40);
             storeChooser.add(label, 0, i+1);
             StoreRadioButton storeRadioButton = new StoreRadioButton(store);
             storeRadioButton.setToggleGroup(toggleGroup);
             if (i == 1) storeRadioButton.setSelected(true);
             storeChooser.add(storeRadioButton, 1, i+1);
         }
+        i++;
+        storeChooser.add(buttonOk, 0, i);
         stage.show();
     }
 
     private void addHeaderProductChooserLine(GridPane storeChooser) {
         Label label = new Label("Наименование магазина");
+        label.setPrefHeight(40);
         storeChooser.add(label, 0, 0);
         label = new Label("Выбрать магазин");
         storeChooser.add(label, 1, 0);

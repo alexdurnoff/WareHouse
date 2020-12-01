@@ -34,21 +34,50 @@ public class ProductPane extends AbstractPane {
 
     @Override
     public void show(){
+        addHeader();
         for (int i = 0; i <productList.size(); i++){
             Product product = (Product) productList.get(i);
-            Label label = new Label(String.valueOf(i));
+            Label label = new Label(String.valueOf(i + 1));
             label.setPrefWidth(30);
             label.setAlignment(Pos.CENTER);
-            this.add(label,0, i);
-            this.add(new TextField(productList.get(i).getTitle()), 1, i);
-            this.add(new TextField(String.valueOf(product.getWeight())), 2, i);
-            this.add(new TextField(String.valueOf(product.getCoast())), 3, i);
-            this.add(new RemoveEntityButton(product), 4, i);
-            this.add(new EditProductButton(product), 5, i);
+            this.add(label,0, i+1);
+            TextField titleTextField = new TextField(productList.get(i).getTitle());
+            titleTextField.setPrefWidth(200);
+            this.add(titleTextField, 1, i+1);
+            TextField weightTextField = new TextField(String.valueOf(product.getWeight()));
+            weightTextField.setPrefWidth(70);
+            weightTextField.setAlignment(Pos.CENTER);
+            this.add(weightTextField, 2, i+1);
+            TextField coastTextField = new TextField(String.valueOf(product.getCoast()));
+            coastTextField.setPrefWidth(70);
+            coastTextField.setAlignment(Pos.CENTER);
+            this.add(coastTextField, 3, i+1);
+            this.add(new RemoveEntityButton(product), 4, i+1);
+            this.add(new EditProductButton(product), 5, i+1);
         }
-        this.setGridLinesVisible(true);
+        //this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    private void addHeader() {
+        Label numberLabel = new Label("№ п.п");
+        numberLabel.setAlignment(Pos.CENTER);
+        numberLabel.setPrefHeight(40);
+        numberLabel.setPrefWidth(40);
+        Label productTitlelabel = new Label("Наименование");
+        productTitlelabel.setPrefWidth(200);
+        productTitlelabel.setAlignment(Pos.CENTER);
+        Label weigthLabel = new Label("Вес");
+        weigthLabel.setPrefWidth(70);
+        weigthLabel.setAlignment(Pos.CENTER);
+        Label coastLabel = new Label("Цена");
+        coastLabel.setPrefWidth(70);
+        coastLabel.setAlignment(Pos.CENTER);
+        this.add(numberLabel, 0, 0);
+        this.add(productTitlelabel, 1, 0);
+        this.add(weigthLabel, 2, 0);
+        this.add(coastLabel, 3, 0);
     }
 
     class EditProductButton extends Button{

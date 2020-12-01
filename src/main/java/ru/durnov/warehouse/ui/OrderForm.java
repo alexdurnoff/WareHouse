@@ -38,7 +38,7 @@ public class OrderForm extends AbstractPane {
     }
 
     private void selectStore(OrderForm orderForm) {
-        new StoreChooserPane(this).setStoreForOrderpane();
+        new StoreChooserPane(this).setStoreForOrderPane();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class OrderForm extends AbstractPane {
     }
 
     private void addproductLine(Product product, Double weigth) {
-        Label label = new Label(String.valueOf(rowCount) + 1);
+        Label label = new Label(String.valueOf(rowCount - 1));
         label.setPrefWidth(30);
         label.setAlignment(Pos.CENTER);
         this.add(label,0, rowCount);
@@ -118,7 +118,7 @@ public class OrderForm extends AbstractPane {
         Label sumLabel = new Label(String.format("%.2f", product.getCoast()*weigth));
         sumLabel.setAlignment(Pos.CENTER);
         sumLabel.setPrefWidth(70);
-        weigthTextField.setOnAction(ae ->{
+        weigthTextField.textProperty().addListener((observable,oldValue, newValue) -> {
             try {
                 double productWeigth = Double.parseDouble(weigthTextField.getText().replace(',', '.'));
                 double productCoast = Double.parseDouble(coastLabel.getText().replace(',', '.'));

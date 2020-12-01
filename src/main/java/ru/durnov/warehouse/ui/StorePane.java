@@ -39,19 +39,31 @@ public class StorePane extends AbstractPane {
 
     @Override
     public void show(){
+        addHeader();
         for (int i = 0; i < storeList.size(); i++){
             Store store = (Store) storeList.get(i);
             Label label = new Label(String.valueOf(i+1));
             label.setPrefWidth(30);
             label.setAlignment(Pos.CENTER);
-            this.add(label,0, i);
-            this.add(new TextField(storeList.get(i).getTitle()), 1, i);
-            //this.add(new EditStoreButton(store), 2, i);
-            this.add(new RemoveEntityButton(store), 3, i);
+            this.add(label,0, i+1);
+            this.add(new TextField(storeList.get(i).getTitle()), 1, i+1);
+            this.add(new EditStoreButton(store), 2, i+1);
+            this.add(new RemoveEntityButton(store), 3, i+1);
         }
-        this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
+    }
+
+    private void addHeader() {
+        Label numberLabel = new Label("№ п.п");
+        numberLabel.setPrefWidth(40);
+        numberLabel.setPrefHeight(40);
+        numberLabel.setAlignment(Pos.CENTER);
+        this.add(numberLabel, 0 ,0);
+        Label storeTitleLabel = new Label("Наименование магазина");
+        storeTitleLabel.setAlignment(Pos.CENTER);
+        storeTitleLabel.setPrefWidth(200);
+        this.add(storeTitleLabel, 1, 0);
     }
 
     class EditStoreButton extends Button {

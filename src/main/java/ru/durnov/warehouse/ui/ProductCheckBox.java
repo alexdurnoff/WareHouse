@@ -9,7 +9,6 @@ public class ProductCheckBox extends CheckBox {
 
     public ProductCheckBox(Product product){
         this.product = product;
-        this.setText(product.getTitle());
     }
 
     public Product getProduct(){

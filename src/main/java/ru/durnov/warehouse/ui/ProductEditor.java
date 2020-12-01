@@ -33,11 +33,11 @@ public class ProductEditor extends SimpleEntityEdit {
         rootNode.add(purposeLabel, 0, 0);
         Label weigthLabel = new Label("Вес");
         weigthLabel.setAlignment(Pos.CENTER);
-        weigthLabel.setPrefHeight(40);
+        weigthLabel.setPrefHeight(60);
         this.productTitle.setAlignment(Pos.CENTER);
         this.productTitle.setPrefWidth(400);
         this.productWeigth.setAlignment(Pos.CENTER);
-        this.productWeigth.setPrefWidth(40);
+        this.productWeigth.setPrefWidth(60);
         rootNode.add(weigthLabel, 1, 0);
         rootNode.add(this.productTitle, 0, 1);
         rootNode.add(this.productWeigth, 1, 1);
