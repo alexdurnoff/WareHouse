@@ -12,19 +12,20 @@ import java.util.List;
 
 public class StorePane extends AbstractPane {
     private List<Entity> storeList;
-    private EntityDao storeDao;
 
     public StorePane(EntityDao storeDao){
         super();
         super.setEntityButtonTitle("Добавить магазин");
-        this.storeDao = storeDao;
+        this.entityDao = storeDao;
         this.storeList = storeDao.getAllEntity();
+        this.message = "Вы действительно хотите удалить этот магазин?";
+        this.removeEntityMessage = "Удалить магазин";
     }
 
-    public void refresh(){
+    /*public void refresh(){
         this.getChildren().clear();
         this.show();
-    }
+    }*/
 
     public void constructNewStore(){
 
@@ -39,36 +40,32 @@ public class StorePane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i);
             this.add(new TextField(storeList.get(i).getTitle()), 1, i);
-            this.add(new RemoveStoreButton(store), 2, i);
+            this.add(new RemoveEntityButton(store), 2, i);
         }
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
     }
 
-    class RemoveStoreButton extends Button{
+    /*class RemoveEntityButton extends Button{
         private Store store;
 
-        RemoveStoreButton(Store store){
+        RemoveEntityButton(Store store){
             super("Удалить магазин");
             this.store = store;
-            this.setOnAction(ae -> removeStoreFromStoreList(this.store));
+            this.setOnAction(ae -> removeEntityFromEntityList(this.store));
         }
     }
 
-    private void removeStoreFromStoreList(Store store) {
-        String message = "Вы уверены, что хотите удалить этот магазин?";
+    private void removeEntityFromEntityList(Store store) {
+        //String message = "Вы уверены, что хотите удалить этот магазин?";
         new AYouSurePane(message, this, store).show();
-        this.storeList = this.storeDao.getAllEntity();
+        this.storeList = this.entityDao.getAllEntity();
         //this.refresh();
-    }
+    }*/
 
-    @Override
-    public void addEntityToEntityList(){
-
-    }
-    public void removeEntityByTitle(Entity entity){
+    /*public void removeEntityByTitle(Entity entity){
         this.storeDao.removeEntityByTitle(entity.getTitle());
         this.storeList.remove(entity);
-    }
+    }*/
 }

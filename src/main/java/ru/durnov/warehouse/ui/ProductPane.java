@@ -1,12 +1,9 @@
 package ru.durnov.warehouse.ui;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import ru.durnov.warehouse.dao.EntityDao;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
@@ -15,44 +12,35 @@ import java.util.List;
 
 public class ProductPane extends AbstractPane {
     private List<Entity> productList;
-    private EntityDao productDao;
+    //private EntityDao productDao;
 
     public ProductPane(EntityDao productDao){
         super();
         super.setEntityButtonTitle("Добавить товар");
-        this.productDao = productDao;
+        this.entityDao = productDao;
         this.productList = productDao.getAllEntity();
+        this.message = "Вы уверены, что хотите удалить этот продукт?";
+        this.removeEntityMessage = "Удалить продукт";
     }
 
-    public void removeEntityByTitle(Entity product) {
-        this.productDao.removeEntityByTitle(product.getTitle());
-        this.productList = productDao.getAllEntity();
-    }
+    /*public void removeEntityByTitle(Entity product) {
+        this.entityDao.removeEntityByTitle(product.getTitle());
+        this.productList = entityDao.getAllEntity();
+    }*/
 
-    @Override
+    /*@Override
     public void refresh() {
         this.getChildren().clear();
         this.show();
-    }
+    }*/
 
     @Override
     public void addEntityToEntityList() {
         constructNewProduct();
-        this.productList = productDao.getAllEntity();
+        this.productList = entityDao.getAllEntity();
     }
 
     private void constructNewProduct() {
-    }
-
-    private void setColumns(){
-        ObservableList<ColumnConstraints> columns = this.getColumnConstraints();
-        for (int i = 0; i < 5; i++) {
-            ColumnConstraints column = new ColumnConstraints();
-            column.setHalignment(HPos.CENTER);
-            columns.add(column);
-        }
-        this.getColumnConstraints().get(4).setFillWidth(true);
-        this.getColumnConstraints().get(5).setFillWidth(true);
     }
 
     @Override
@@ -66,7 +54,7 @@ public class ProductPane extends AbstractPane {
             this.add(new TextField(productList.get(i).getTitle()), 1, i);
             this.add(new TextField(String.valueOf(product.getWeight())), 2, i);
             this.add(new TextField(String.valueOf(product.getCoast())), 3, i);
-            this.add(new RemoveProductButton(product), 4, i);
+            this.add(new RemoveEntityButton(product), 4, i);
             this.add(new EditProductButton(product), 5, i);
         }
         this.setGridLinesVisible(true);
@@ -74,21 +62,21 @@ public class ProductPane extends AbstractPane {
         this.setWidth(USE_PREF_SIZE);
     }
 
-    class RemoveProductButton extends Button {
+    /*class RemoveEntityButton extends Button {
         private Product product;
 
-        RemoveProductButton(Product product){
+        RemoveEntityButton(Product product){
             super("Удалить товар");
             this.product = product;
-            this.setOnAction(ae -> removeProductFromProductList(this.product));
+            this.setOnAction(ae -> removeEntityFromEntityList(this.product));
         }
-    }
+    }*/
 
-    private void removeProductFromProductList(Product product) {
-        String message = "Вы уверены, что хотите удалить этот продукт?";
+   /* private void removeEntityFromEntityList(Product product) {
+        //String message = "Вы уверены, что хотите удалить этот продукт?";
         new AYouSurePane(message, this, product).show();
-        this.productList = this.productDao.getAllEntity();
-    }
+        this.productList = this.entityDao.getAllEntity();
+    }*/
 
     class EditProductButton extends Button{
         private Product product;

@@ -58,8 +58,8 @@ public class DummyOrderDaoImpl implements EntityDao {
 
     @Override
     public void removeEntityByTitle(String title) {
-        for (Entity order : orderList){
-            if (order.getTitle().equals(title)) this.orderList.remove(order);
+        for (int i = 0; i <this.orderList.size();i++){
+            if(this.orderList.get(i).getTitle().equals(title)) this.orderList.remove(i);
         }
 
     }

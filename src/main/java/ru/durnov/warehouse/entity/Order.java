@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Order extends Entity {
     private List<Product> productList;
-    private Map<Product,Double> productWeigthMap;
+    private final Map<Product,Double> productWeigthMap;
     private int number;
     private Date date;
     private Store store;

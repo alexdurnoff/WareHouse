@@ -1,5 +1,6 @@
 package ru.durnov.warehouse.ui;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,12 +22,14 @@ public class AYouSurePane {
 
     public void show(){
         FlowPane rootNode = new FlowPane();
+        rootNode.setAlignment(Pos.CENTER);
+        rootNode.setHgap(20);
         Button buttonOk = new Button("Ok");
         buttonOk.setOnAction(ae -> this.remove());
         Button buttonCancel = new Button("Отмена");
         buttonCancel.setOnAction(ae -> this.cancel());
         this.stage = new Stage();
-        Scene scene = new Scene(rootNode);
+        Scene scene = new Scene(rootNode, 500, 50);
         stage.setScene(scene);
         Label label = new Label(message);
         rootNode.getChildren().addAll(label, buttonOk, buttonCancel);

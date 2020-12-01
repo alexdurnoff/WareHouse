@@ -33,7 +33,7 @@ public class OrderForm extends AbstractPane {
         this.productList = productDao.getAllEntity();
         selectStore(this);
         int number = orderDao.getAllEntity().size();
-        this.order = new Order(number, store);
+        this.order = new Order(number + 1, store);
         this.rowCount = 0;
     }
 
@@ -146,7 +146,7 @@ public class OrderForm extends AbstractPane {
 
     public void save() {
         ObservableList<Node> children = this.getChildren();
-        for (int i = 5; i <children.size(); i = i + 5){
+        for (int i = 6; i <children.size(); i = i + 5){
             Label label = (Label) children.get(i);
             int number = Integer.parseInt(label.getText());
             int k = i + 1;

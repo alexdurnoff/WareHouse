@@ -7,25 +7,26 @@ import javafx.scene.control.TextField;
 import ru.durnov.warehouse.dao.EntityDao;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
-import ru.durnov.warehouse.entity.Store;
 
 import java.util.List;
 
 public class OrderArchivPane extends AbstractPane {
     private List<Entity> orderList;
-    private EntityDao orderDao;
+    //private EntityDao orderDao;
 
     public OrderArchivPane(EntityDao orderDao){
         super();
         super.setAddEntityButton(null);
-        this.orderDao = orderDao;
+        this.entityDao = orderDao;
         this.orderList = orderDao.getAllEntity();
+        this.message = "Вы уверены, что хотите удалить эту накладную?";
+        this.removeEntityMessage = "Удалить накладную";
     }
 
     @Override
     public void addEntityToEntityList() {
         counstructNewOrder();
-        this.orderList = orderDao.getAllEntity();
+        this.orderList = entityDao.getAllEntity();
     }
 
     private void counstructNewOrder() {
@@ -43,16 +44,16 @@ public class OrderArchivPane extends AbstractPane {
             this.add(label,0, i);
             this.add(new TextField(orderList.get(i).getTitle()), 1, i);
             this.add(new PrintButton(order), 2, i);
-            this.add(new RemoveOrderButton(order), 3, i);
+            this.add(new RemoveEntityButton(order), 3, i);
         }
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
     }
 
-    @Override
+    /*@Override
     public void removeEntityByTitle(Entity entity) {
-        this.orderDao.removeEntityByTitle(entity.getTitle());
+        this.entityDao.removeEntityByTitle(entity.getTitle());
         this.orderList.remove(entity);
     }
 
@@ -60,11 +61,12 @@ public class OrderArchivPane extends AbstractPane {
     public void refresh() {
         this.getChildren().clear();
         this.show();
-    }
+    }*/
 
     class PrintButton extends Button{
         private Order order;
         PrintButton(Order order){
+            super("Печать");
             this.order = order;
             this.setOnAction(ae -> printOrder(order));
         }
@@ -75,19 +77,18 @@ public class OrderArchivPane extends AbstractPane {
         System.out.println(order);
     }
 
-    class RemoveOrderButton extends Button{
+    /*class RemoveEntityButton extends Button{
         private Order order;
 
-        RemoveOrderButton(Order order){
+        RemoveEntityButton(Order order){
             super("Удалить накладную");
             this.order = order;
             this.setOnAction(ae -> removeOrderFromOrderList(this.order));
         }
-    }
+    }*/
 
-    private void removeOrderFromOrderList(Order order) {
-        String message = "Вы уверены, что хотите удалить эту накладную?";
+    /*private void removeOrderFromOrderList(Order order) {
         new AYouSurePane(message, this, order).show();
-        this.orderList = this.orderDao.getAllEntity();
-    }
+        this.orderList = this.entityDao.getAllEntity();
+    }*/
 }
