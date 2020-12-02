@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import ru.durnov.warehouse.dao.MockDataBase;
 import ru.durnov.warehouse.daoservice.*;
 
 import java.util.ArrayList;
@@ -38,10 +39,14 @@ public class WareHouseApplication extends Application {
     }
 
     private void setupDao() {
-        this.productDao = new DummyProductDaoServiceImpl();
-        this.storeDao = new DummyStoreDaoServiceImpl();
-        this.customerDao = new DummyCustomerDaoServiceImpl();
-        this.orderDao = new DummyOrderDaoServiceImpl();
+        MockDataBase dataBase = new MockDataBase();
+        //this.productDao = new DummyProductDaoServiceImpl();
+        this.productDao = new ProductDaoService(dataBase);
+        //this.storeDao = new DummyStoreDaoServiceImpl();
+        this.storeDao = new StoreDaoService(dataBase);
+        //this.customerDao = new DummyCustomerDaoServiceImpl();
+        //this.orderDao = new DummyOrderDaoServiceImpl();
+        this.orderDao = new OrderDaoService(dataBase);
     }
 
     private List<ColumnConstraints> getColumns() {

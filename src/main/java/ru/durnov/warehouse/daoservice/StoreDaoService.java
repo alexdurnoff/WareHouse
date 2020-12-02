@@ -57,4 +57,6 @@ public class StoreDaoService implements EntityDaoService {
         return this.database.getStoreProductPairSet(storeTitle);
     }
 
+
+
 }

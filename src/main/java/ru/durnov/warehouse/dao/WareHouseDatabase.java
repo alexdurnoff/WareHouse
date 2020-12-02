@@ -8,7 +8,7 @@ import ru.durnov.warehouse.entity.StoreProductPair;
 import java.util.Set;
 
 public interface WareHouseDatabase {
-    public Set<Order> getOrderFromWareHouse();
+    public Set<Order> getOrders();
     public Set<Store> getStoreSet();
     public Set<StoreProductPair> getStoreProductPairSet(String storeName);
     public Set<Product> getProductSet();

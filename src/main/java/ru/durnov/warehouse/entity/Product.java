@@ -37,4 +37,12 @@ public class Product extends Entity{
     public void setCoast(double coast) {
         this.coast = coast;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj.getClass() == Product.class)) return false;
+        Product product = (Product) obj;
+        return this.getTitle().equals(product.getTitle());
+    }
 }

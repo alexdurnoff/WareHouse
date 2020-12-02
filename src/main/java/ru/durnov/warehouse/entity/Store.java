@@ -29,4 +29,16 @@ public class Store extends Entity{
     }
 
     public Customer getCustomer(){return customer;}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj.getClass() == Store.class)) return false;
+        Store store = (Store) obj;
+        return this.getTitle().equals(store.getTitle());
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
 }

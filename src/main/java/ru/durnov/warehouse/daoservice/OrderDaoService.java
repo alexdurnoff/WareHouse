@@ -17,13 +17,13 @@ public class OrderDaoService implements EntityDaoService {
     @Override
     public List<Entity> getAllEntity() {
         ArrayList<Entity> orders = new ArrayList<>();
-        orders.addAll(this.database.getOrderFromWareHouse());
+        orders.addAll(this.database.getOrders());
         return orders;
     }
 
     @Override
     public Entity getEntityByTitle(String title) {
-        Set<Order> orderSet = this.database.getOrderFromWareHouse();
+        Set<Order> orderSet = this.database.getOrders();
         for (Order order : orderSet){
             if (order.getTitle().equals(title)) return order;
         }
@@ -32,7 +32,7 @@ public class OrderDaoService implements EntityDaoService {
 
     @Override
     public void removeEntityByTitle(String title) {
-        Set<Order> orderSet = this.database.getOrderFromWareHouse();
+        Set<Order> orderSet = this.database.getOrders();
         for (Order order : orderSet){
             if (order.getTitle().equals(title)) this.database.removeOrder(order);
         }

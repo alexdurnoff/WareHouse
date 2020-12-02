@@ -26,4 +26,11 @@ public class Order extends Entity {
         return productWeigthMap;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (! (obj.getClass() == Order.class)) return false;
+        Order order = (Order) obj;
+        return this.getTitle().equals(order.getTitle());
+    }
 }

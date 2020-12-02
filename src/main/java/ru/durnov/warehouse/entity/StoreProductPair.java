@@ -24,4 +24,12 @@ public class StoreProductPair {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj.getClass() == StoreProductPair.class)) return false;
+        StoreProductPair storeProductPair = (StoreProductPair) obj;
+        return ((this.store.equals(storeProductPair.store)) && (this.product.equals(storeProductPair.product)));
+    }
 }
