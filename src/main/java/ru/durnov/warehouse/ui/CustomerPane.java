@@ -6,12 +6,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import ru.durnov.warehouse.dao.CustomerDao;
+import ru.durnov.warehouse.daoservice.CustomerDao;
 import ru.durnov.warehouse.entity.Customer;
 import ru.durnov.warehouse.entity.Entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerPane extends AbstractPane {

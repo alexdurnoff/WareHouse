@@ -22,7 +22,7 @@ public abstract class NewEntityCreator extends SimpleEntityEdit {
         this.button.setText(addButtonTitle);
         this.button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.entityDao.addEntity(entity);
+            pane.entityDaoService.addEntity(entity);
             pane.refresh();
             stage.close();
         });

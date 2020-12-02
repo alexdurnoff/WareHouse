@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ru.durnov.warehouse.dao.EntityDao;
+import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 
@@ -14,10 +14,10 @@ public class OrderArchivPane extends AbstractPane {
     private List<Entity> orderList;
     //private EntityDao orderDao;
 
-    public OrderArchivPane(EntityDao orderDao){
+    public OrderArchivPane(EntityDaoService orderDao){
         super();
         super.setAddEntityButton(null);
-        this.entityDao = orderDao;
+        this.entityDaoService = orderDao;
         this.orderList = orderDao.getAllEntity();
         this.message = "Вы уверены, что хотите удалить эту накладную?";
         this.removeEntityMessage = "Удалить накладную";
@@ -26,7 +26,7 @@ public class OrderArchivPane extends AbstractPane {
     @Override
     public void addEntityToEntityList() {
         counstructNewOrder();
-        this.orderList = entityDao.getAllEntity();
+        this.orderList = entityDaoService.getAllEntity();
     }
 
     private void counstructNewOrder() {

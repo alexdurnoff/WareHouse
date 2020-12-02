@@ -20,7 +20,7 @@ public class ProductCreator extends SimpleEntityEdit{
         this.button = new Button("Ok");
         button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.entityDao.addEntity(entity);
+            pane.entityDaoService.addEntity(entity);
             pane.refresh();
             stage.close();
         });

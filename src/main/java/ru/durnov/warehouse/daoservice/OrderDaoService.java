@@ -1,0 +1,46 @@
+package ru.durnov.warehouse.daoservice;
+
+import ru.durnov.warehouse.dao.WareHouseDatabase;
+import ru.durnov.warehouse.entity.Entity;
+import ru.durnov.warehouse.entity.Order;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+public class OrderDaoService implements EntityDaoService {
+    private WareHouseDatabase database;
+
+    public OrderDaoService(WareHouseDatabase database){
+        this.database = database;
+    }
+    @Override
+    public List<Entity> getAllEntity() {
+        ArrayList<Entity> orders = new ArrayList<>();
+        orders.addAll(this.database.getOrderFromWareHouse());
+        return orders;
+    }
+
+    @Override
+    public Entity getEntityByTitle(String title) {
+        Set<Order> orderSet = this.database.getOrderFromWareHouse();
+        for (Order order : orderSet){
+            if (order.getTitle().equals(title)) return order;
+        }
+        return null;
+    }
+
+    @Override
+    public void removeEntityByTitle(String title) {
+        Set<Order> orderSet = this.database.getOrderFromWareHouse();
+        for (Order order : orderSet){
+            if (order.getTitle().equals(title)) this.database.removeOrder(order);
+        }
+    }
+
+    @Override
+    public void addEntity(Entity entity) {
+        Order order = (Order) entity;
+        this.database.addOrderToWareHouse(order);
+    }
+}

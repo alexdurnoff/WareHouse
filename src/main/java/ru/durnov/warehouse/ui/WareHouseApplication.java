@@ -1,8 +1,6 @@
 package ru.durnov.warehouse.ui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,8 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import ru.durnov.warehouse.dao.*;
-import ru.durnov.warehouse.entity.Order;
+import ru.durnov.warehouse.daoservice.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +16,10 @@ import java.util.List;
 public class WareHouseApplication extends Application {
     private GridPane rootNode;
     private ScrollPane scrollPane;
-    private EntityDao productDao;
-    private EntityDao storeDao;
-    private EntityDao customerDao;
-    private EntityDao orderDao;
+    private EntityDaoService productDao;
+    private EntityDaoService storeDao;
+    private EntityDaoService customerDao;
+    private EntityDaoService orderDao;
     private List<Button> buttonList;
 
     @Override
@@ -41,10 +38,10 @@ public class WareHouseApplication extends Application {
     }
 
     private void setupDao() {
-        this.productDao = new DummyProductDaoImpl();
-        this.storeDao = new DummyStoreDaoImpl();
-        this.customerDao = new DummyCustomerDaoImpl();
-        this.orderDao = new DummyOrderDaoImpl();
+        this.productDao = new DummyProductDaoServiceImpl();
+        this.storeDao = new DummyStoreDaoServiceImpl();
+        this.customerDao = new DummyCustomerDaoServiceImpl();
+        this.orderDao = new DummyOrderDaoServiceImpl();
     }
 
     private List<ColumnConstraints> getColumns() {

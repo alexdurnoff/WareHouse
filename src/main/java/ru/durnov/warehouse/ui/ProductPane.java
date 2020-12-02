@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ru.durnov.warehouse.dao.EntityDao;
+import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
 
@@ -13,10 +13,10 @@ import java.util.List;
 public class ProductPane extends AbstractPane {
     private List<Entity> productList;
 
-    public ProductPane(EntityDao productDao){
+    public ProductPane(EntityDaoService productDao){
         super();
         super.setEntityButtonTitle("Добавить товар");
-        this.entityDao = productDao;
+        this.entityDaoService = productDao;
         this.productList = productDao.getAllEntity();
         this.message = "Вы уверены, что хотите удалить этот продукт?";
         this.removeEntityMessage = "Удалить продукт";
@@ -25,7 +25,7 @@ public class ProductPane extends AbstractPane {
     @Override
     public void addEntityToEntityList() {
         constructNewProduct();
-        this.productList = entityDao.getAllEntity();
+        this.productList = entityDaoService.getAllEntity();
     }
 
     private void constructNewProduct() {

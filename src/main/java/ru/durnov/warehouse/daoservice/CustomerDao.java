@@ -1,4 +1,4 @@
-package ru.durnov.warehouse.dao;
+package ru.durnov.warehouse.daoservice;
 
 import ru.durnov.warehouse.entity.Customer;
 

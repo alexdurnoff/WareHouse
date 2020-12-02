@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.entity.Entity;
-import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
 
 public class StoreCreator extends SimpleEntityEdit{
@@ -20,7 +19,7 @@ public class StoreCreator extends SimpleEntityEdit{
         this.button = new Button("Ok");
         button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.entityDao.addEntity(entity);
+            pane.entityDaoService.addEntity(entity);
             pane.refresh();
             stage.close();
         });

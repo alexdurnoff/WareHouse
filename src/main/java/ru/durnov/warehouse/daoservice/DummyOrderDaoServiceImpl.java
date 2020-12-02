@@ -1,4 +1,4 @@
-package ru.durnov.warehouse.dao;
+package ru.durnov.warehouse.daoservice;
 
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
@@ -8,13 +8,13 @@ import ru.durnov.warehouse.entity.Store;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DummyOrderDaoImpl implements EntityDao {
+public class DummyOrderDaoServiceImpl implements EntityDaoService {
     private List<Entity> orderList;
     private List<Entity> storeList;
 
-    public DummyOrderDaoImpl(){
+    public DummyOrderDaoServiceImpl(){
         this.orderList = new ArrayList<>();
-        this.storeList = new DummyStoreDaoImpl().getAllEntity();
+        this.storeList = new DummyStoreDaoServiceImpl().getAllEntity();
         Order order1 = new Order(1, (Store) this.storeList.get(0));
         orderList.add(order1);
         Order order2 = new Order(2, (Store) this.storeList.get(1));
@@ -25,7 +25,7 @@ public class DummyOrderDaoImpl implements EntityDao {
     }
 
     private void setupOrders() {
-        EntityDao productDao = new DummyProductDaoImpl();
+        EntityDaoService productDao = new DummyProductDaoServiceImpl();
         for (Entity entity : orderList){
             Order order = (Order) entity;
             List<Entity> entityList = productDao.getAllEntity();

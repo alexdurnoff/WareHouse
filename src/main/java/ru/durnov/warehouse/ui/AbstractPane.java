@@ -2,7 +2,7 @@ package ru.durnov.warehouse.ui;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import ru.durnov.warehouse.dao.EntityDao;
+import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class AbstractPane extends GridPane {
     private List<Entity> entityList;
-    protected EntityDao entityDao;
+    protected EntityDaoService entityDaoService;
     private Button addEntityButton;
     protected String message;
     protected String removeEntityMessage;
@@ -37,7 +37,7 @@ public abstract class AbstractPane extends GridPane {
     public abstract void show();
 
     public void removeEntityByTitle(Entity entity){
-        this.entityDao.removeEntityByTitle(entity.getTitle());
+        this.entityDaoService.removeEntityByTitle(entity.getTitle());
         this.entityList.remove(entity);
     }
 
@@ -59,6 +59,6 @@ public abstract class AbstractPane extends GridPane {
 
     protected void removeEntityFromEntityList(Entity entity){
         new AYouSurePane(message, this, entity).show();
-        this.entityList = this.entityDao.getAllEntity();
+        this.entityList = this.entityDaoService.getAllEntity();
     };
 }

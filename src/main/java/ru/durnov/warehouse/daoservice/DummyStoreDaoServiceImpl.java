@@ -1,4 +1,4 @@
-package ru.durnov.warehouse.dao;
+package ru.durnov.warehouse.daoservice;
 
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Store;
@@ -6,10 +6,10 @@ import ru.durnov.warehouse.entity.Store;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DummyStoreDaoImpl implements EntityDao {
+public class DummyStoreDaoServiceImpl implements EntityDaoService {
     private List<Entity> entityList;
 
-    public DummyStoreDaoImpl(){
+    public DummyStoreDaoServiceImpl(){
         this.entityList = new ArrayList<>();
         this.entityList.add(new Store("Ферма №1"));
         this.entityList.add(new Store("Ферма №2"));

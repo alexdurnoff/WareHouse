@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ru.durnov.warehouse.dao.EntityDao;
+import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
@@ -14,16 +14,16 @@ import ru.durnov.warehouse.entity.Store;
 import java.util.List;
 
 public class OrderForm extends AbstractPane {
-    private final EntityDao productDao;
+    private final EntityDaoService productDao;
     private final List<Entity> productList;
-    private final EntityDao orderDao;
-    private final EntityDao storeDao;
+    private final EntityDaoService orderDao;
+    private final EntityDaoService storeDao;
     private Store store;
     private final Order order;
     private int rowCount;
 
 
-    public OrderForm(EntityDao orderDao, EntityDao productDao, EntityDao storeDao){
+    public OrderForm(EntityDaoService orderDao, EntityDaoService productDao, EntityDaoService storeDao){
         super();
         super.setEntityButtonTitle("Добавить товар");
         this.productDao = productDao;

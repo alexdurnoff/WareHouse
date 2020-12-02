@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ru.durnov.warehouse.dao.EntityDao;
+import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Store;
 
@@ -13,10 +13,10 @@ import java.util.List;
 public class StorePane extends AbstractPane {
     private List<Entity> storeList;
 
-    public StorePane(EntityDao storeDao){
+    public StorePane(EntityDaoService storeDao){
         super();
         super.setEntityButtonTitle("Добавить магазин");
-        this.entityDao = storeDao;
+        this.entityDaoService = storeDao;
         this.storeList = storeDao.getAllEntity();
         this.message = "Вы действительно хотите удалить этот магазин?";
         this.removeEntityMessage = "Удалить";
@@ -34,7 +34,7 @@ public class StorePane extends AbstractPane {
     @Override
     public void addEntityToEntityList() {
         constructNewStore();
-        this.storeList = this.entityDao.getAllEntity();
+        this.storeList = this.entityDaoService.getAllEntity();
     }
 
     @Override
