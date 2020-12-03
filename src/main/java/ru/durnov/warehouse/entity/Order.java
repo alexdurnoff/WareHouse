@@ -5,17 +5,18 @@ import java.util.*;
 public class Order extends Entity {
     private List<Product> productList;
     private final Map<Product,Double> productWeigthMap;
-    private int number;
+    private final int id;
     private Date date;
     private Store store;
 
 
-    public Order(int number, Store store) {
+    public Order(int id, Store store) {
         super("");
-        super.SetTitle("Накладная № " + number);
+        super.SetTitle("Накладная № " + id);
         this.productList = new ArrayList<>();
         this.productWeigthMap = new HashMap<>();
         this.store = store;
+        this.id = id;
     }
 
     public void addProduct(Product product, Double weigth){
