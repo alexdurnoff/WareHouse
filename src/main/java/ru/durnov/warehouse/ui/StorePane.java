@@ -17,7 +17,6 @@ public class StorePane extends AbstractPane {
         super();
         super.setEntityButtonTitle("Добавить магазин");
         this.entityDaoService = storeDao;
-        this.storeList = storeDao.getAllEntity();
         this.message = "Вы действительно хотите удалить этот магазин?";
         this.removeEntityMessage = "Удалить";
     }
@@ -39,6 +38,7 @@ public class StorePane extends AbstractPane {
 
     @Override
     public void show(){
+        this.storeList = entityDaoService.getAllEntity();
         addHeader();
         for (int i = 0; i < storeList.size(); i++){
             Store store = (Store) storeList.get(i);

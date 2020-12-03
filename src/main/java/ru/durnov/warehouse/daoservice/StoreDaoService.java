@@ -1,5 +1,7 @@
 package ru.durnov.warehouse.daoservice;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import ru.durnov.warehouse.dao.WareHouseDatabase;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
@@ -18,7 +20,7 @@ public class StoreDaoService implements EntityDaoService {
     }
     @Override
     public List<Entity> getAllEntity() {
-        ArrayList<Entity> storeList = new ArrayList<>();
+        ObservableList<Entity> storeList = FXCollections.observableArrayList();
         storeList.addAll(this.database.getStoreSet());
         return storeList;
     }

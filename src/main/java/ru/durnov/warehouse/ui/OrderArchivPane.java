@@ -12,13 +12,11 @@ import java.util.List;
 
 public class OrderArchivPane extends AbstractPane {
     private List<Entity> orderList;
-    //private EntityDao orderDao;
 
     public OrderArchivPane(EntityDaoService orderDao){
         super();
         super.setAddEntityButton(null);
         this.entityDaoService = orderDao;
-        this.orderList = orderDao.getAllEntity();
         this.message = "Вы уверены, что хотите удалить эту накладную?";
         this.removeEntityMessage = "Удалить накладную";
     }
@@ -36,6 +34,7 @@ public class OrderArchivPane extends AbstractPane {
 
     @Override
     public void show() {
+        this.orderList = entityDaoService.getAllEntity();
         for (int i = 0; i < orderList.size(); i++){
             Order order = (Order) orderList.get(i);
             Label label = new Label(String.valueOf(i));

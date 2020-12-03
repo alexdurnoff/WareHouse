@@ -1,5 +1,6 @@
 package ru.durnov.warehouse.ui;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
@@ -48,17 +49,18 @@ public abstract class AbstractPane extends GridPane {
 
 
     protected class RemoveEntityButton extends Button{
-        private Entity entity;
+        private final Entity entity;
 
         RemoveEntityButton(Entity entity){
             super(removeEntityMessage);
             this.entity = entity;
             this.setOnAction(ae -> removeEntityFromEntityList(this.entity));
         }
+
+        public String getTitle(){ return  entity.getTitle();}
     }
 
     protected void removeEntityFromEntityList(Entity entity){
         new AYouSurePane(message, this, entity).show();
-        this.entityList = this.entityDaoService.getAllEntity();
     };
 }

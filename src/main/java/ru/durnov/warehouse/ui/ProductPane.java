@@ -17,7 +17,7 @@ public class ProductPane extends AbstractPane {
         super();
         super.setEntityButtonTitle("Добавить товар");
         this.entityDaoService = productDao;
-        this.productList = productDao.getAllEntity();
+        //this.productList = productDao.getAllEntity();
         this.message = "Вы уверены, что хотите удалить этот продукт?";
         this.removeEntityMessage = "Удалить продукт";
     }
@@ -34,6 +34,7 @@ public class ProductPane extends AbstractPane {
 
     @Override
     public void show(){
+        this.productList = entityDaoService.getAllEntity();
         addHeader();
         for (int i = 0; i <productList.size(); i++){
             Product product = (Product) productList.get(i);
