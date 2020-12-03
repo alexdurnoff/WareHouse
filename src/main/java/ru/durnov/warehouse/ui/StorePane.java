@@ -22,10 +22,6 @@ public class StorePane extends AbstractPane {
         this.removeEntityMessage = "Удалить";
     }
 
-    /*public void refresh(){
-        this.getChildren().clear();
-        this.show();
-    }*/
 
     public void constructNewStore(){
         new StoreCreator(this).show();
@@ -81,26 +77,4 @@ public class StorePane extends AbstractPane {
     private void editStore(Store store) {
         new StoreEditor(this, store).show();
     }
-
-    /*class RemoveEntityButton extends Button{
-        private Store store;
-
-        RemoveEntityButton(Store store){
-            super("Удалить магазин");
-            this.store = store;
-            this.setOnAction(ae -> removeEntityFromEntityList(this.store));
-        }
-    }
-
-    private void removeEntityFromEntityList(Store store) {
-        //String message = "Вы уверены, что хотите удалить этот магазин?";
-        new AYouSurePane(message, this, store).show();
-        this.storeList = this.entityDao.getAllEntity();
-        //this.refresh();
-    }*/
-
-    /*public void removeEntityByTitle(Entity entity){
-        this.storeDao.removeEntityByTitle(entity.getTitle());
-        this.storeList.remove(entity);
-    }*/
 }

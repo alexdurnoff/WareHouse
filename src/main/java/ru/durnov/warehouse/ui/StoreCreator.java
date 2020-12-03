@@ -31,6 +31,8 @@ public class StoreCreator extends SimpleEntityEdit{
         });
     }
 
+
+
     @Override
     protected void setupEntityProrepties(Entity entity) {
         Store store = (Store) entity;

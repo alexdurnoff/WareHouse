@@ -9,6 +9,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.dao.MockDataBase;
+import ru.durnov.warehouse.dao.RealDataBase;
 import ru.durnov.warehouse.daoservice.*;
 
 import java.sql.SQLException;
@@ -39,14 +40,10 @@ public class WareHouseApplication extends Application {
         primaryStage.show();
     }
 
-    private void setupDao() {
-        MockDataBase dataBase = new MockDataBase();
-        //this.productDao = new DummyProductDaoServiceImpl();
+    private void setupDao() throws SQLException {
+        RealDataBase dataBase = new RealDataBase();
         this.productDao = new ProductDaoService(dataBase);
-        //this.storeDao = new DummyStoreDaoServiceImpl();
         this.storeDao = new StoreDaoService(dataBase);
-        //this.customerDao = new DummyCustomerDaoServiceImpl();
-        //this.orderDao = new DummyOrderDaoServiceImpl();
         this.orderDao = new OrderDaoService(dataBase);
     }
 

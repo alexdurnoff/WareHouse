@@ -47,8 +47,8 @@ public class ProductChooserPane {
         rootNode.add(scrollPane, 0, 1);
         addHeaderProductChooserLine(productChooser);
         int i;
-        for (i = 1; i < productList.size(); i++){
-            Product product = (Product) productList.get(i);
+        for (i = 1; i < productList.size() + 1; i++){
+            Product product = (Product) productList.get(i-1);
             Label label = new Label(product.getTitle());
             label.setPrefHeight(40);
             label.setPrefWidth(450);

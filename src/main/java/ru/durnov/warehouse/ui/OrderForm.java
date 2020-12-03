@@ -5,7 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
+import ru.durnov.warehouse.daoservice.StoreDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
@@ -13,6 +15,7 @@ import ru.durnov.warehouse.entity.Store;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderForm extends AbstractPane {
     private final EntityDaoService productDao;
@@ -30,12 +33,24 @@ public class OrderForm extends AbstractPane {
         this.productDao = productDao;
         this.orderDao = orderDao;
         this.storeDao = storeDao;
+        if(storeDao.getAllEntity().size() < 1) setupFirstStore(storeDao);
         this.store = (Store) storeDao.getAllEntity().get(0);
         this.productList = productDao.getAllEntity();
         selectStore(this);
         int number = orderDao.getAllEntity().size();
         this.order = new Order(number + 1, store);
         this.rowCount = 0;
+    }
+
+    private void setupFirstStore(EntityDaoService storeDao) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Добавление первого магазина в базу");
+        dialog.setHeaderText("Введите название магазина");
+        dialog.setContentText("Магазин:");
+        Optional<String> result = dialog.showAndWait();
+        Store store;
+        store = result.map(Store::new).orElseGet(() -> new Store(""));
+        storeDao.addEntity(store);
     }
 
     private void selectStore(OrderForm orderForm) throws SQLException {
@@ -47,6 +62,7 @@ public class OrderForm extends AbstractPane {
         new ProductChooserPane(this).addEntityToEntityList();
     }
 
+    @Override
     public void refresh() {
         this.getChildren().clear();
         this.rowCount = 0;
@@ -173,5 +189,9 @@ public class OrderForm extends AbstractPane {
 
     public void setStore(Store store){
         this.store = store;
+    }
+
+    public EntityDaoService getStoreDaoService(){
+        return this.storeDao;
     }
 }
