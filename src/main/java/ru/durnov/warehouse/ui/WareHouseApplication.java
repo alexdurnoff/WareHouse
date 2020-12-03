@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import ru.durnov.warehouse.dao.MockDataBase;
 import ru.durnov.warehouse.daoservice.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +58,37 @@ public class WareHouseApplication extends Application {
 
     private void addButtons(){
         Button productButton = new Button("База товаров");
-        productButton.setOnAction(ae -> showPane(new ProductPane(this.productDao)));
+        productButton.setOnAction(ae -> {
+            try {
+                showPane(new ProductPane(this.productDao));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         Button storeButton = new Button("База магазинов");
-        storeButton.setOnAction(ae -> showPane(new StorePane(this.storeDao)));
+        storeButton.setOnAction(ae -> {
+            try {
+                showPane(new StorePane(this.storeDao));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         Button orderButton = new Button("Создать накладную");
-        orderButton.setOnAction(ae -> showPane(new OrderForm(this.orderDao, this.productDao, this.storeDao)));
+        orderButton.setOnAction(ae -> {
+            try {
+                showPane(new OrderForm(this.orderDao, this.productDao, this.storeDao));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         Button orderArchivButton = new Button("Архив накладных");
-        orderArchivButton.setOnAction(ae -> showPane(new OrderArchivPane(this.orderDao)));
+        orderArchivButton.setOnAction(ae -> {
+            try {
+                showPane(new OrderArchivPane(this.orderDao));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         rootNode.add(productButton, 0,0);
         rootNode.add(storeButton, 1, 0);
         rootNode.add(orderButton, 2, 0);
@@ -74,7 +99,7 @@ public class WareHouseApplication extends Application {
         this.buttonList.add(orderArchivButton);
     }
 
-    private void showPane(AbstractPane pane){
+    private void showPane(AbstractPane pane) throws SQLException {
         removeScrollPaneIfExists();
         removeAllButtons();
         int i = 1;
@@ -82,7 +107,13 @@ public class WareHouseApplication extends Application {
         this.rootNode.add(rootButton, 0, 0);
         rootButton.setOnAction(ae -> backToTheStartWindow());
         if (pane.getAddEntityButton() != null){
-            pane.getAddEntityButton().setOnAction(ae -> pane.addEntityToEntityList());
+            pane.getAddEntityButton().setOnAction(ae -> {
+                try {
+                    pane.addEntityToEntityList();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            });
             this.buttonList.add(pane.getAddEntityButton());
             this.rootNode.add(pane.getAddEntityButton(), i, 0);
             i++;

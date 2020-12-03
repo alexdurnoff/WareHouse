@@ -8,6 +8,7 @@ import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderArchivPane extends AbstractPane {
@@ -22,7 +23,7 @@ public class OrderArchivPane extends AbstractPane {
     }
 
     @Override
-    public void addEntityToEntityList() {
+    public void addEntityToEntityList() throws SQLException {
         counstructNewOrder();
         this.orderList = entityDaoService.getAllEntity();
     }
@@ -33,7 +34,7 @@ public class OrderArchivPane extends AbstractPane {
 
 
     @Override
-    public void show() {
+    public void show() throws SQLException {
         this.orderList = entityDaoService.getAllEntity();
         for (int i = 0; i < orderList.size(); i++){
             Order order = (Order) orderList.get(i);

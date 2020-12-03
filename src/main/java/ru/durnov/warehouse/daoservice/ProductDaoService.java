@@ -8,6 +8,7 @@ import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,14 +20,14 @@ public class ProductDaoService implements EntityDaoService {
         this.database = database;
     }
     @Override
-    public List<Entity> getAllEntity() {
+    public List<Entity> getAllEntity() throws SQLException {
         ObservableList<Entity> products = FXCollections.observableArrayList();
         products.addAll(this.database.getProductSet());
         return products;
     }
 
     @Override
-    public Entity getEntityByTitle(String title) {
+    public Entity getEntityByTitle(String title) throws SQLException {
         Set<Product> productSet = this.database.getProductSet();
         for (Product product : productSet){
             if (product.getTitle().equals(title)) return product;
@@ -35,7 +36,7 @@ public class ProductDaoService implements EntityDaoService {
     }
 
     @Override
-    public void removeEntityByTitle(String title) {
+    public void removeEntityByTitle(String title) throws SQLException {
         Set<Product> productSet = this.database.getProductSet();
         for (Product product : productSet){
             if (product.getTitle().equals(title)) {

@@ -8,6 +8,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.entity.Entity;
 
+import java.sql.SQLException;
+
 
 public class AYouSurePane {
     private String message;
@@ -25,7 +27,13 @@ public class AYouSurePane {
         rootNode.setAlignment(Pos.CENTER);
         rootNode.setHgap(20);
         Button buttonOk = new Button("Ok");
-        buttonOk.setOnAction(ae -> this.remove());
+        buttonOk.setOnAction(ae -> {
+            try {
+                this.remove();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
         Button buttonCancel = new Button("Отмена");
         buttonCancel.setOnAction(ae -> this.cancel());
         this.stage = new Stage();
@@ -40,7 +48,7 @@ public class AYouSurePane {
         this.stage.close();
     }
 
-    public void remove(){
+    public void remove() throws SQLException {
         this.pane.removeEntityByTitle(this.entity);
         this.pane.refresh();
         this.stage.close();

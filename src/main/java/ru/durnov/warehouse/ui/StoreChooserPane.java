@@ -10,13 +10,15 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Store;
+
+import java.sql.SQLException;
 import java.util.List;
 
 public class StoreChooserPane {
     private final OrderForm orderForm;
     private final List<Entity> storeList;
 
-    public StoreChooserPane(OrderForm orderForm){
+    public StoreChooserPane(OrderForm orderForm) throws SQLException {
         this.orderForm = orderForm;
         this.storeList = orderForm.getStoreList();
     }

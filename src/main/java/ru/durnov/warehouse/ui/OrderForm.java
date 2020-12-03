@@ -11,6 +11,7 @@ import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderForm extends AbstractPane {
@@ -23,7 +24,7 @@ public class OrderForm extends AbstractPane {
     private int rowCount;
 
 
-    public OrderForm(EntityDaoService orderDao, EntityDaoService productDao, EntityDaoService storeDao){
+    public OrderForm(EntityDaoService orderDao, EntityDaoService productDao, EntityDaoService storeDao) throws SQLException {
         super();
         super.setEntityButtonTitle("Добавить товар");
         this.productDao = productDao;
@@ -37,7 +38,7 @@ public class OrderForm extends AbstractPane {
         this.rowCount = 0;
     }
 
-    private void selectStore(OrderForm orderForm) {
+    private void selectStore(OrderForm orderForm) throws SQLException {
         new StoreChooserPane(this).setStoreForOrderPane();
     }
 
@@ -62,7 +63,7 @@ public class OrderForm extends AbstractPane {
     }
 
     @Override
-    public void removeEntityByTitle(Entity entity) {
+    public void removeEntityByTitle(Entity entity) throws SQLException {
         this.productDao.removeEntityByTitle(entity.getTitle());
         this.productList.remove(entity);
     }
@@ -166,7 +167,7 @@ public class OrderForm extends AbstractPane {
         return productList;
     }
 
-    public List<Entity> getStoreList(){
+    public List<Entity> getStoreList() throws SQLException {
         return this.storeDao.getAllEntity();
     }
 

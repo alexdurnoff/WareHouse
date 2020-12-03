@@ -6,6 +6,7 @@ import ru.durnov.warehouse.dao.WareHouseDatabase;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,14 +18,14 @@ public class OrderDaoService implements EntityDaoService {
         this.database = database;
     }
     @Override
-    public List<Entity> getAllEntity() {
+    public List<Entity> getAllEntity() throws SQLException {
         ObservableList<Entity> orders = FXCollections.observableArrayList();
         orders.addAll(this.database.getOrders());
         return orders;
     }
 
     @Override
-    public Entity getEntityByTitle(String title) {
+    public Entity getEntityByTitle(String title) throws SQLException {
         Set<Order> orderSet = this.database.getOrders();
         for (Order order : orderSet){
             if (order.getTitle().equals(title)) return order;
@@ -33,7 +34,7 @@ public class OrderDaoService implements EntityDaoService {
     }
 
     @Override
-    public void removeEntityByTitle(String title) {
+    public void removeEntityByTitle(String title) throws SQLException {
         Set<Order> orderSet = this.database.getOrders();
         for (Order order : orderSet){
             if (order.getTitle().equals(title)) this.database.removeOrder(order);

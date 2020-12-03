@@ -8,6 +8,7 @@ import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductPane extends AbstractPane {
@@ -23,7 +24,7 @@ public class ProductPane extends AbstractPane {
     }
 
     @Override
-    public void addEntityToEntityList() {
+    public void addEntityToEntityList() throws SQLException {
         constructNewProduct();
         this.productList = entityDaoService.getAllEntity();
     }
@@ -33,7 +34,7 @@ public class ProductPane extends AbstractPane {
     }
 
     @Override
-    public void show(){
+    public void show() throws SQLException {
         this.productList = entityDaoService.getAllEntity();
         addHeader();
         for (int i = 0; i <productList.size(); i++){

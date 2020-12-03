@@ -5,13 +5,14 @@ import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
 import ru.durnov.warehouse.entity.StoreProductPair;
 
+import java.sql.SQLException;
 import java.util.Set;
 
 public interface WareHouseDatabase {
-    public Set<Order> getOrders();
-    public Set<Store> getStoreSet();
+    public Set<Order> getOrders() throws SQLException;
+    public Set<Store> getStoreSet() throws SQLException;
     public Set<StoreProductPair> getStoreProductPairSet(String storeName);
-    public Set<Product> getProductSet();
+    public Set<Product> getProductSet() throws SQLException;
 
     public void addOrderToWareHouse(Order order);
     public void addStoreToDataBase(Store store);

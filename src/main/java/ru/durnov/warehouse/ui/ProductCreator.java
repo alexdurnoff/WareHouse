@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
 
+import java.sql.SQLException;
+
 public class ProductCreator extends SimpleEntityEdit{
     private final TextField productTitle;
     private final TextField productCoast;
@@ -21,7 +23,11 @@ public class ProductCreator extends SimpleEntityEdit{
         button.setOnAction(ae -> {
             setupEntityProrepties(entity);
             pane.entityDaoService.addEntity(entity);
-            pane.refresh();
+            try {
+                pane.refresh();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             stage.close();
         });
     }

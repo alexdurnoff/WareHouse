@@ -5,6 +5,7 @@ import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class DummyOrderDaoServiceImpl implements EntityDaoService {
     private List<Entity> orderList;
     private List<Entity> storeList;
 
-    public DummyOrderDaoServiceImpl(){
+    public DummyOrderDaoServiceImpl() throws SQLException {
         this.orderList = new ArrayList<>();
         this.storeList = new DummyStoreDaoServiceImpl().getAllEntity();
         Order order1 = new Order(1, (Store) this.storeList.get(0));
@@ -24,7 +25,7 @@ public class DummyOrderDaoServiceImpl implements EntityDaoService {
         setupOrders();
     }
 
-    private void setupOrders() {
+    private void setupOrders() throws SQLException {
         EntityDaoService productDao = new DummyProductDaoServiceImpl();
         for (Entity entity : orderList){
             Order order = (Order) entity;

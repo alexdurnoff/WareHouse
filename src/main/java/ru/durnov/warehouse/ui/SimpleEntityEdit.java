@@ -7,6 +7,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.entity.Entity;
 
+import java.sql.SQLException;
+
 /**
  * Abstract class for edit store and product entities
  * For edit Order entity is used OrderForm.class
@@ -24,7 +26,11 @@ public abstract class SimpleEntityEdit {
         this.button = new Button("Ok");
         button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.refresh();
+            try {
+                pane.refresh();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             stage.close();
         });
     }

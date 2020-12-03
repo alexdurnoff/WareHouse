@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +34,16 @@ public abstract class AbstractPane extends GridPane {
         this.addEntityButton = button;
     }
 
-    public abstract void addEntityToEntityList();
+    public abstract void addEntityToEntityList() throws SQLException;
 
-    public abstract void show();
+    public abstract void show() throws SQLException;
 
-    public void removeEntityByTitle(Entity entity){
+    public void removeEntityByTitle(Entity entity) throws SQLException {
         this.entityDaoService.removeEntityByTitle(entity.getTitle());
         this.entityList.remove(entity);
     }
 
-    public void refresh(){
+    public void refresh() throws SQLException {
         this.getChildren().clear();
         this.show();
     }
