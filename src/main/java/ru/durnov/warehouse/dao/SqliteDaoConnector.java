@@ -3,8 +3,7 @@ package ru.durnov.warehouse.dao;
 import java.sql.*;
 
 public class SqliteDaoConnector {
-    private final String driverStr = "driver=com.mysql.cj.jdbc.Driver";
-    private Connection connection;
+    private final Connection connection;
     private final String url = "jdbc:sqlite:db/db.sqlite3";
 
     public SqliteDaoConnector() throws SQLException {
