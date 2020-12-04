@@ -3,14 +3,14 @@ package ru.durnov.warehouse.print;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.print.Printer;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Scale;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.ProductWrapper;
@@ -110,11 +110,26 @@ public class PrintForm {
 
     public void print() {
         javafx.print.PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
-        System.out.println(job);
-        if(job != null){
+        JobSettings jobSettings = job.getJobSettings();
+        //PageLayout pageLayout = jobSettings.getPageLayout();
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
+        jobSettings.setPageLayout(pageLayout);
+        double scaleX = pageLayout.getPrintableWidth() / this.gridPane.getBoundsInParent().getWidth();
+        double scaleY = pageLayout.getPrintableHeight() / this.gridPane.getBoundsInParent().getHeight();
+        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));
+       /* if(job != null){
+            boolean succes = job.printPage(this.gridPane);
+            if (succes) job.endJob();
+        }*/
+        if (job == null) return;
+        boolean proceed = job.showPrintDialog(null);
+
+        if (proceed) {
             boolean succes = job.printPage(this.gridPane);
             if (succes) job.endJob();
         }
+
+
     }
 
     public GridPane getGridPane() {
