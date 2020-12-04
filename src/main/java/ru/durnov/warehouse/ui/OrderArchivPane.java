@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
+import ru.durnov.warehouse.print.ViewForm;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -76,7 +77,7 @@ public class OrderArchivPane extends AbstractPane {
     }
 
     private void printOrder(Order order) {
-        System.out.println(order);
+       new ViewForm(order).show();
     }
 
     /*class RemoveEntityButton extends Button{
