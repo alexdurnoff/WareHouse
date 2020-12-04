@@ -19,7 +19,7 @@ public class ViewForm {
 
     public void show(){
         GridPane rootNode = new GridPane();
-        Scene scene = new Scene(rootNode, 420, 594);
+        Scene scene = new Scene(rootNode, 430, 640);
         Stage stage = new Stage();
         stage.setScene(scene);
         Button buttonPrint = new Button("Печать");

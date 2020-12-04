@@ -76,7 +76,9 @@ public class RealDataBase implements WareHouseDatabase{
             String orderStr = resultSet.getString(1);
             String productTitle = resultSet.getString(2);
             double weight = resultSet.getDouble(3);
-            if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle, weight));
+            double coast = resultSet.getDouble(4);
+            System.out.println(weight);
+            if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle,coast, weight));
         }
         return productSet;
     }
@@ -116,7 +118,7 @@ public class RealDataBase implements WareHouseDatabase{
         Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
         productWeigthMap.forEach(((product, weigth) -> {
             String request = "insert into orderproducttable values(" + '"' + order.getTitle() + '"' +
-                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ");";
+                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + ");";
             this.connector.executeUpdateRequest(request);
         }));
     }

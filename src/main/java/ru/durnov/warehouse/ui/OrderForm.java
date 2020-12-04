@@ -169,7 +169,6 @@ public class OrderForm extends AbstractPane {
         this.order.getProductList().clear();
         this.order.getProductWeigthMap().clear();
         for (int i = 6; i <children.size(); i = i + 5){
-            Label label = (Label) children.get(i);
             int k = i + 1;
             TextField textField = (TextField) children.get(k);
             if (textField.getText().equals("")) break;
@@ -177,6 +176,10 @@ public class OrderForm extends AbstractPane {
             k++;
             textField = (TextField) children.get(k);
             Double weigth = Double.valueOf(textField.getText().replace(',', '.'));
+            k++;
+            Label label = (Label) children.get(k);
+            Double coast = Double.valueOf(label.getText().replace(',', '.'));
+            product.setCoast(coast);
             order.addProduct(product, weigth);
         }
         orderDao.addEntity(order);

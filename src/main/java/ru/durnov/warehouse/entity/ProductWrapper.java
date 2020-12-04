@@ -13,7 +13,7 @@ public class ProductWrapper {
         this.id = id;
         this.weigth = weigth;
         this.coast = coast;
-        this.summ =weigth * coast;
+        this.summ = weigth * coast;
         this.title = this.product.getTitle();
     }
 

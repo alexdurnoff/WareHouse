@@ -17,22 +17,24 @@ import java.util.List;
 import java.util.Map;
 
 public class PrintForm {
-    private Order order;
-    private GridPane gridPane;
-    private TableView<ProductWrapper> tableView;
+    private final Order order;
+    private final GridPane gridPane;
+    private final TableView<ProductWrapper> tableView;
 
     public PrintForm(Order order) {
         this.order = order;
         this.gridPane = new GridPane();
+        this.gridPane.setPrefWidth(420);
+        this.getGridPane().setPrefHeight(594);
         this.tableView = new TableView<>();
         setupTableView();
         setupGridPane();
     }
 
     private void setupTableView() {
-        this.tableView.setPrefWidth(400);
-        this.tableView.setMaxWidth(400);
-        this.tableView.setMinWidth(400);
+        this.tableView.setPrefWidth(402);
+        this.tableView.setMaxWidth(402);
+        this.tableView.setMinWidth(402);
         ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
         numberColumn.setPrefWidth(50);

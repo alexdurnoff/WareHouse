@@ -39,7 +39,7 @@ public class OrderArchivPane extends AbstractPane {
         this.orderList = entityDaoService.getAllEntity();
         for (int i = 0; i < orderList.size(); i++){
             Order order = (Order) orderList.get(i);
-            Label label = new Label(String.valueOf(i));
+            Label label = new Label(String.valueOf(i + 1));
             label.setPrefWidth(30);
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i);
