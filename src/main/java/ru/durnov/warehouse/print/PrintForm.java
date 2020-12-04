@@ -27,8 +27,8 @@ public class PrintForm {
     public PrintForm(Order order) {
         this.order = order;
         this.gridPane = new GridPane();
-        this.gridPane.setPrefWidth(420);
-        this.getGridPane().setPrefHeight(594);
+        //this.gridPane.setPrefWidth(420);
+        //this.getGridPane().setPrefHeight(594);
         this.tableView = new TableView<>();
         setupTableView();
         setupGridPane();
@@ -110,13 +110,14 @@ public class PrintForm {
 
     public void print() {
         javafx.print.PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
-        JobSettings jobSettings = job.getJobSettings();
+        //JobSettings jobSettings = job.getJobSettings();
         //PageLayout pageLayout = jobSettings.getPageLayout();
-        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
-        jobSettings.setPageLayout(pageLayout);
+        //PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
+        /*jobSettings.setPageLayout(pageLayout);
         double scaleX = pageLayout.getPrintableWidth() / this.gridPane.getBoundsInParent().getWidth();
         double scaleY = pageLayout.getPrintableHeight() / this.gridPane.getBoundsInParent().getHeight();
-        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));
+        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));*/
+        //this.gridPane.setPrefSize(pageLayout.getPrintableWidth(), pageLayout.getPrintableHeight());
        /* if(job != null){
             boolean succes = job.printPage(this.gridPane);
             if (succes) job.endJob();
