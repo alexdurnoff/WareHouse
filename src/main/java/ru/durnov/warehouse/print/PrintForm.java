@@ -35,9 +35,9 @@ public class PrintForm {
     }
 
     private void setupTableView() {
-        this.tableView.setPrefWidth(402);
+        /*this.tableView.setPrefWidth(402);
         this.tableView.setMaxWidth(402);
-        this.tableView.setMinWidth(402);
+        this.tableView.setMinWidth(402);*/
         ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
         numberColumn.setPrefWidth(50);
@@ -110,27 +110,26 @@ public class PrintForm {
 
     public void print() {
         javafx.print.PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
-        //JobSettings jobSettings = job.getJobSettings();
-        //PageLayout pageLayout = jobSettings.getPageLayout();
-        //PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
-        /*jobSettings.setPageLayout(pageLayout);
-        double scaleX = pageLayout.getPrintableWidth() / this.gridPane.getBoundsInParent().getWidth();
-        double scaleY = pageLayout.getPrintableHeight() / this.gridPane.getBoundsInParent().getHeight();
-        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));*/
-        //this.gridPane.setPrefSize(pageLayout.getPrintableWidth(), pageLayout.getPrintableHeight());
-       /* if(job != null){
+        JobSettings jobSettings = job.getJobSettings();
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4,
+                PageOrientation.PORTRAIT, 20,10,10,10);
+        jobSettings.setPageLayout(pageLayout);
+        double scaleX = 1.3;
+        double scaleY = 1.3;
+        /*double scaleX = pageLayout.getPrintableWidth() / this.gridPane.getBoundsInParent().getWidth();
+        double scaleY = pageLayout.getPrintableHeight() / this.gridPane.getBoundsInParent().getHeight();*/
+        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));
+       /*if(job != null){
             boolean succes = job.printPage(this.gridPane);
             if (succes) job.endJob();
         }*/
-        if (job == null) return;
+       if (job == null) return;
         boolean proceed = job.showPrintDialog(null);
 
         if (proceed) {
-            boolean succes = job.printPage(this.gridPane);
+            boolean succes = job.printPage(pageLayout, this.gridPane);
             if (succes) job.endJob();
         }
-
-
     }
 
     public GridPane getGridPane() {

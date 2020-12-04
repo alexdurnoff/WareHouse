@@ -22,12 +22,12 @@ public class ViewForm {
 
     public void show(){
         this.rootNode = new GridPane();
-        this.scene = new Scene(rootNode, 430, 640);
+        this.scene = new Scene(rootNode);
         Stage stage = new Stage();
         stage.setScene(scene);
         Button buttonPrint = new Button("Печать");
         Button buttonClose = new Button("Закрыть");
-        buttonPrint.setOnAction(ae -> print());
+        buttonPrint.setOnAction(ae -> this.printForm.print());
         buttonClose.setOnAction(ae -> stage.close());
         printForm.getGridPane().setAlignment(Pos.CENTER);
         rootNode.add(printForm.getGridPane(), 0,0, 2, 1);
