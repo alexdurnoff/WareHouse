@@ -3,11 +3,14 @@ package ru.durnov.warehouse.print;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.ProductWrapper;
@@ -81,8 +84,9 @@ public class PrintForm {
         Label orderTitleLabel = new Label(this.order.getTitle());
         orderTitleLabel.setAlignment(Pos.BASELINE_CENTER);
         orderTitleLabel.setPrefWidth(400);
+        orderTitleLabel.setFont(new Font(16));
         Label toLeftLabel = new Label("Кому");
-        toLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
+        toLeftLabel.setAlignment(Pos.BASELINE_LEFT);
         toLeftLabel.setPrefWidth(40);
         Label toRightLabel = new Label(this.order.getStore().toString());
         toRightLabel.setAlignment(Pos.BASELINE_LEFT);
@@ -105,6 +109,12 @@ public class PrintForm {
     }
 
     public void print() {
+        javafx.print.PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
+        System.out.println(job);
+        if(job != null){
+            boolean succes = job.printPage(this.gridPane);
+            if (succes) job.endJob();
+        }
     }
 
     public GridPane getGridPane() {
