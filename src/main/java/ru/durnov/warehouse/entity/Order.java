@@ -34,6 +34,7 @@ public class Order extends Entity {
 
     public void addProduct(Product product, Double weigth){
         this.productList.add(product);
+        this.productList.sort(new ProductNumberComparator());
         this.productWeigthMap.put(product, weigth);
     }
 

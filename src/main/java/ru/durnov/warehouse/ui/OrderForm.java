@@ -124,6 +124,7 @@ public class OrderForm extends AbstractPane {
         this.add(label,0, rowCount);
         TextField purposeTextField = new TextField(product.getTitle());
         purposeTextField.setPrefWidth(500);
+        purposeTextField.setEditable(false);
         this.add(purposeTextField, 1, rowCount);
         TextField weigthTextField = new TextField(String.format("%.2f", weigth));
         weigthTextField.setPrefWidth(70);
@@ -168,11 +169,13 @@ public class OrderForm extends AbstractPane {
         //Теперь, после того, как мы заполнили веса, мы очищаем мапу и лист.
         this.order.getProductList().clear();
         this.order.getProductWeigthMap().clear();
+        int productNumber = 0; //Переменная для сортировки продуктов в накладной
         for (int i = 6; i <children.size(); i = i + 5){
             int k = i + 1;
             TextField textField = (TextField) children.get(k);
             if (textField.getText().equals("")) break;
             Product product = new Product(textField.getText());
+            product.setNumberInOrder(productNumber);
             k++;
             textField = (TextField) children.get(k);
             Double weigth = Double.valueOf(textField.getText().replace(',', '.'));
@@ -181,6 +184,7 @@ public class OrderForm extends AbstractPane {
             Double coast = Double.valueOf(label.getText().replace(',', '.'));
             product.setCoast(coast);
             order.addProduct(product, weigth);
+            productNumber++;
         }
         orderDao.addEntity(order);
     }

@@ -10,6 +10,7 @@ import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.print.ViewForm;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 
 public class OrderArchivPane extends AbstractPane {
@@ -36,7 +37,9 @@ public class OrderArchivPane extends AbstractPane {
 
     @Override
     public void show() throws SQLException {
+        OrderComparator orderComparator = new OrderComparator();
         this.orderList = entityDaoService.getAllEntity();
+        this.orderList.sort(orderComparator);
         for (int i = 0; i < orderList.size(); i++){
             Order order = (Order) orderList.get(i);
             Label label = new Label(String.valueOf(i + 1));
@@ -65,6 +68,23 @@ public class OrderArchivPane extends AbstractPane {
 
     private void printOrder(Order order) {
        new ViewForm(order).show();
+    }
+
+    private static class OrderComparator implements Comparator<Entity>{
+
+        @Override
+        public int compare(Entity o1, Entity o2) {
+            Order order1 = (Order) o1;
+            Order order2 = (Order) o2;
+            if (order1.getId() > order2.getId()) return 1;
+            if (order1.getId() < order2.getId()) return -1;
+            return 0;
+        }
+
+        @Override
+        public Comparator<Entity> reversed() {
+            return null;
+        }
     }
 
 }

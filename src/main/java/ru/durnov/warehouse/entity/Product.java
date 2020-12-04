@@ -3,6 +3,7 @@ package ru.durnov.warehouse.entity;
 public class Product extends Entity{
     private double weight;
     private double coast;
+    private int numberInOrder;
 
     public Product(String title){
         super(title);
@@ -35,6 +36,12 @@ public class Product extends Entity{
     public void setCoast(double coast) {
         this.coast = coast;
     }
+
+    public void setNumberInOrder(int numberInOrder){
+        this.numberInOrder = numberInOrder;
+    }
+
+    public int getNumberInOrder(){return numberInOrder;}
 
     @Override
     public boolean equals(Object obj) {

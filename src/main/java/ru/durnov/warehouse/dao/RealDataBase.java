@@ -118,7 +118,7 @@ public class RealDataBase implements WareHouseDatabase{
         Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
         productWeigthMap.forEach(((product, weigth) -> {
             String request = "insert into orderproducttable values(" + '"' + order.getTitle() + '"' +
-                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + ");";
+                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + "," + product.getNumberInOrder()+ ");";
             this.connector.executeUpdateRequest(request);
         }));
     }
