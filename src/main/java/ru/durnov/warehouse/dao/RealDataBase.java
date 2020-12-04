@@ -8,6 +8,7 @@ import ru.durnov.warehouse.entity.StoreProductPair;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class RealDataBase implements WareHouseDatabase{
@@ -59,6 +60,27 @@ public class RealDataBase implements WareHouseDatabase{
         return productSet;
     }
 
+    /**
+     * Ну не работает по человечески!! Не хочет делать select product, weigth where order='...
+     * Как я только не изгалялся. syntax error near order, и все. Хот ты пляши вокруг него!!!
+     * @param order
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Set<Product> getProductForOrder(Order order) throws SQLException {
+        String request = "select * from orderproducttable";
+        ResultSet resultSet = connector.getResultSet(request);
+        Set<Product> productSet = new HashSet<>();
+        while (resultSet.next()){
+            String orderStr = resultSet.getString(1);
+            String productTitle = resultSet.getString(2);
+            double weight = resultSet.getDouble(3);
+            if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle, weight));
+        }
+        return productSet;
+    }
+
     @Override
     public void addOrderToWareHouse(Order order) {
         String firstStr = "insert into ordertable values(";
@@ -90,6 +112,16 @@ public class RealDataBase implements WareHouseDatabase{
     }
 
     @Override
+    public void addProductsToOrder(Order order) {
+        Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
+        productWeigthMap.forEach(((product, weigth) -> {
+            String request = "insert into orderproducttable values(" + '"' + order.getTitle() + '"' +
+                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ");";
+            this.connector.executeUpdateRequest(request);
+        }));
+    }
+
+    @Override
     public void removeOrder(Order order) {
         String request = "delete from ordertable where id='" + order.getId() + "';";
         connector.executeUpdateRequest(request);
@@ -99,7 +131,6 @@ public class RealDataBase implements WareHouseDatabase{
     public void removeProductFromStore(Store store, Product product) {
         String request = "delete from storeproducttable where store='"+
                 store.getTitle() + "'"+ " and " + "product='" + product.getTitle() + "';";
-        System.out.println(request);
         connector.executeUpdateRequest(request);
     }
 
@@ -114,4 +145,6 @@ public class RealDataBase implements WareHouseDatabase{
         String request = "delete from producttable where product='" + product.getTitle() + "'";
         connector.executeUpdateRequest(request);
     }
+
+
 }

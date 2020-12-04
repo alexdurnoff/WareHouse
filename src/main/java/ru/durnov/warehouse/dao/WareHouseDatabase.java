@@ -13,6 +13,7 @@ public interface WareHouseDatabase {
     public Set<Store> getStoreSet() throws SQLException;
     public Set<StoreProductPair> getStoreProductPairSet(String storeName);
     public Set<Product> getProductSet() throws SQLException;
+    public Set<Product> getProductForOrder(Order order) throws SQLException;
 
     public void addOrderToWareHouse(Order order);
     public void addStoreToDataBase(Store store);
@@ -24,4 +25,5 @@ public interface WareHouseDatabase {
     public void removeStore(Store store);
     public void removeProduct(Product product);
 
+    void addProductsToOrder(Order order);
 }

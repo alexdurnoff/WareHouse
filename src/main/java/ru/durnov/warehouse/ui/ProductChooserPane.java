@@ -42,7 +42,6 @@ public class ProductChooserPane {
             choosedProductSet.forEach(p -> this.orderForm.addProduct(p, 0.));
             this.orderForm.refresh();
             stage.close();
-
         });
         rootNode.add(scrollPane, 0, 1);
         addHeaderProductChooserLine(productChooser);

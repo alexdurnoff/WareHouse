@@ -5,9 +5,9 @@ import javafx.collections.ObservableList;
 import ru.durnov.warehouse.dao.WareHouseDatabase;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
+import ru.durnov.warehouse.entity.Product;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +21,7 @@ public class OrderDaoService implements EntityDaoService {
     public List<Entity> getAllEntity() throws SQLException {
         ObservableList<Entity> orders = FXCollections.observableArrayList();
         orders.addAll(this.database.getOrders());
+        setupOrders(orders);
         return orders;
     }
 
@@ -45,5 +46,19 @@ public class OrderDaoService implements EntityDaoService {
     public void addEntity(Entity entity) {
         Order order = (Order) entity;
         this.database.addOrderToWareHouse(order);
+        this.database.addProductsToOrder(order);
+    }
+
+    public void setupOrders(ObservableList<Entity> orders){
+        orders.forEach(entity -> {
+            Order order = (Order) entity;
+            Set<Product> productSet = null;
+            try {
+                productSet = this.database.getProductForOrder(order);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            productSet.forEach(product -> order.addProduct(product, product.getWeight()));
+        });
     }
 }

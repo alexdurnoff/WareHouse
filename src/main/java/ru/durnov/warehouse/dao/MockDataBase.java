@@ -103,6 +103,11 @@ public class MockDataBase implements WareHouseDatabase{
     }
 
     @Override
+    public Set<Product> getProductForOrder(Order order) {
+        return null;
+    }
+
+    @Override
     public void addOrderToWareHouse(Order order) {
         if (!(orderTable.contains(order)))this.orderTable.add(order);
     }
@@ -154,5 +159,10 @@ public class MockDataBase implements WareHouseDatabase{
     @Override
     public void removeProduct(Product product) {
         productTable.removeIf(product1 -> product1.equals(product));
+    }
+
+    @Override
+    public void addProductsToOrder(Order order) {
+
     }
 }

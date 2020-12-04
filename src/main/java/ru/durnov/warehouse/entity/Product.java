@@ -20,8 +20,6 @@ public class Product extends Entity{
         this.weight =weight;
     }
 
-
-
     public double getWeight() {
         return weight;
     }

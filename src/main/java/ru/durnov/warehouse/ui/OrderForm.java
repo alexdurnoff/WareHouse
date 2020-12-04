@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
-import ru.durnov.warehouse.daoservice.StoreDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
@@ -164,9 +163,13 @@ public class OrderForm extends AbstractPane {
 
     public void save() {
         ObservableList<Node> children = this.getChildren();
+        //Самое простое. Все предыдущие данные у накладной были с нулевым весом.
+        //Это было необходимо для передачи продуктов из ProductChooserPane в orderForm
+        //Теперь, после того, как мы заполнили веса, мы очищаем мапу и лист.
+        this.order.getProductList().clear();
+        this.order.getProductWeigthMap().clear();
         for (int i = 6; i <children.size(); i = i + 5){
             Label label = (Label) children.get(i);
-            int number = Integer.parseInt(label.getText());
             int k = i + 1;
             TextField textField = (TextField) children.get(k);
             if (textField.getText().equals("")) break;

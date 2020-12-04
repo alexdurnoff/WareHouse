@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
@@ -13,6 +14,7 @@ import ru.durnov.warehouse.entity.ProductWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PrintForm {
     private Order order;
@@ -33,18 +35,37 @@ public class PrintForm {
         this.tableView.setMinWidth(400);
         ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
+        numberColumn.setPrefWidth(50);
         TableColumn<ProductWrapper,String> titleColumn = new TableColumn<>("Наименование");
+        titleColumn.setPrefWidth(180);
         TableColumn<ProductWrapper,String> countColumn = new TableColumn<>("К-во");
+        countColumn.setPrefWidth(50);
         TableColumn<ProductWrapper,String> coastColumn = new TableColumn<>("Цена");
+        coastColumn.setPrefWidth(60);
         TableColumn<ProductWrapper,String> sumColumn = new TableColumn<>("Сумма");
+        sumColumn.setPrefWidth(60);
         this.tableView.getColumns().addAll(numberColumn, titleColumn, countColumn, coastColumn, sumColumn);
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("weigth"));
+        coastColumn.setCellValueFactory(new PropertyValueFactory<>("coast"));
+        sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+        this.tableView.setItems(productWrappers);
     }
 
     private ObservableList<ProductWrapper> getProductWrapperList() {
         List<Product> productList = this.order.getProductList();
+        Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
         List<ProductWrapper> productWrapperList = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++){
-            productWrapperList.add(new ProductWrapper(productList.get(i), i + 1));
+            ProductWrapper productWrapper = new ProductWrapper(productList.get(i), i + 1, 0, 0);
+            productWeigthMap.forEach(((product, weigth) -> {
+                if (productWrapper.getProduct().equals(product)){
+                    productWrapper.setWeigth(product.getWeight());
+                    productWrapper.setCoast(product.getCoast());
+                }
+            } ));
+            productWrapperList.add(productWrapper);
         }
         return FXCollections.observableList(productWrapperList);
     }
@@ -52,8 +73,10 @@ public class PrintForm {
     private void setupGridPane() {
         Label dateLabel = new Label(this.order.getDate());
         dateLabel.setAlignment(Pos.BASELINE_RIGHT);
+        dateLabel.setPrefWidth(400);
         Label orderTitleLabel = new Label(this.order.getTitle());
         orderTitleLabel.setAlignment(Pos.BASELINE_CENTER);
+        orderTitleLabel.setPrefWidth(400);
         Label toLeftLabel = new Label("Кому");
         toLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
         toLeftLabel.setPrefWidth(40);
@@ -66,7 +89,7 @@ public class PrintForm {
         Label producerLabel = new Label("Сдал");
         Label consumerLabel = new Label("Принял");
         this.gridPane.add(dateLabel, 0, 0, 3, 1);
-        this.gridPane.add(orderTitleLabel, 1, 1, 3, 1);
+        this.gridPane.add(orderTitleLabel, 0, 1,3,1);
         this.gridPane.add(toLeftLabel, 0, 2);
         this.gridPane.add(toRightLabel, 1, 2);
         this.gridPane.add(fromLeftLabel, 0, 3);
@@ -74,6 +97,7 @@ public class PrintForm {
         this.gridPane.add(this.tableView, 0, 4, 3, 1);
         this.gridPane.add(producerLabel, 0,5);
         this.gridPane.add(consumerLabel, 2, 5);
+        this.getGridPane().setVgap(10);
     }
 
     public void print() {

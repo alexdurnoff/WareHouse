@@ -53,19 +53,6 @@ public class OrderArchivPane extends AbstractPane {
     }
 
 
-
-    /*@Override
-    public void removeEntityByTitle(Entity entity) {
-        this.entityDao.removeEntityByTitle(entity.getTitle());
-        this.orderList.remove(entity);
-    }
-
-    @Override
-    public void refresh() {
-        this.getChildren().clear();
-        this.show();
-    }*/
-
     class PrintButton extends Button{
         private Order order;
         PrintButton(Order order){
@@ -80,18 +67,4 @@ public class OrderArchivPane extends AbstractPane {
        new ViewForm(order).show();
     }
 
-    /*class RemoveEntityButton extends Button{
-        private Order order;
-
-        RemoveEntityButton(Order order){
-            super("Удалить накладную");
-            this.order = order;
-            this.setOnAction(ae -> removeOrderFromOrderList(this.order));
-        }
-    }*/
-
-    /*private void removeOrderFromOrderList(Order order) {
-        new AYouSurePane(message, this, order).show();
-        this.orderList = this.entityDao.getAllEntity();
-    }*/
 }
