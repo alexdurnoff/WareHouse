@@ -7,6 +7,7 @@ public class ProductWrapper {
     private Double coast;
     private Double summ;
     private String title;
+    private String convert;
 
     public ProductWrapper(Product product, int id, double weigth, double coast){
         this.product = product;
@@ -15,6 +16,7 @@ public class ProductWrapper {
         this.coast = coast;
         this.summ = weigth * coast;
         this.title = this.product.getTitle();
+        this.convert = String.format("%.2f", this.weigth);
     }
 
     public Product getProduct() {
@@ -28,6 +30,7 @@ public class ProductWrapper {
     public void setWeigth(Double weigth) {
         this.weigth = weigth;
         this.summ =this.weigth * this.coast;
+        this.convert = String.format("%.2f", this.weigth);
     }
 
     public void setCoast(Double coast) {
@@ -49,5 +52,9 @@ public class ProductWrapper {
 
     public String getSum(){
         return String.format("%.2f", this.summ);
+    }
+
+    public String getConvert(){
+        return this.convert;
     }
 }

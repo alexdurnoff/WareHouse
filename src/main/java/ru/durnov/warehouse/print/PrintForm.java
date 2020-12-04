@@ -49,7 +49,8 @@ public class PrintForm {
         this.tableView.getColumns().addAll(numberColumn, titleColumn, countColumn, coastColumn, sumColumn);
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        countColumn.setCellValueFactory(new PropertyValueFactory<>("weigth"));
+        //countColumn.setCellValueFactory(new PropertyValueFactory<>("weigth"));
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("convert"));
         coastColumn.setCellValueFactory(new PropertyValueFactory<>("coast"));
         sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
         this.tableView.setItems(productWrappers);
@@ -65,6 +66,7 @@ public class PrintForm {
                 if (productWrapper.getProduct().equals(product)){
                     productWrapper.setWeigth(product.getWeight());
                     productWrapper.setCoast(product.getCoast());
+                    System.out.println(productWrapper.getWeight());
                 }
             } ));
             productWrapperList.add(productWrapper);
