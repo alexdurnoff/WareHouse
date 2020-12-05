@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Store;
+import ru.durnov.warehouse.entity.StoreComparator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -36,6 +37,7 @@ public class StorePane extends AbstractPane {
     @Override
     public void show() throws SQLException {
         this.storeList = entityDaoService.getAllEntity();
+        //this.storeList.sort(new StoreComparator());
         addHeader();
         for (int i = 0; i < storeList.size(); i++){
             Store store = (Store) storeList.get(i);

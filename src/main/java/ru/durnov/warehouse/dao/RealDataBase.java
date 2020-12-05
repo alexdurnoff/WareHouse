@@ -77,8 +77,9 @@ public class RealDataBase implements WareHouseDatabase{
             String productTitle = resultSet.getString(2);
             double weight = resultSet.getDouble(3);
             double coast = resultSet.getDouble(4);
+            int productNumber = resultSet.getInt(5);
             System.out.println(weight);
-            if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle,coast, weight));
+            if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle,coast, weight, productNumber));
         }
         return productSet;
     }
@@ -118,7 +119,7 @@ public class RealDataBase implements WareHouseDatabase{
         Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
         productWeigthMap.forEach(((product, weigth) -> {
             String request = "insert into orderproducttable values(" + '"' + order.getTitle() + '"' +
-                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + "," + product.getNumberInOrder()+ ");";
+                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + ", " + product.getNumberInOrder()+ ");";
             this.connector.executeUpdateRequest(request);
         }));
     }
@@ -126,6 +127,9 @@ public class RealDataBase implements WareHouseDatabase{
     @Override
     public void removeOrder(Order order) {
         String request = "delete from ordertable where id='" + order.getId() + "';";
+        connector.executeUpdateRequest(request);
+        String title = order.getTitle();
+        request = "delete from orderproducttable where titleoforder='" + title + "';";
         connector.executeUpdateRequest(request);
     }
 

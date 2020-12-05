@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
+import ru.durnov.warehouse.entity.ProductComparator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +19,6 @@ public class ProductPane extends AbstractPane {
         super();
         super.setEntityButtonTitle("Добавить товар");
         this.entityDaoService = productDao;
-        //this.productList = productDao.getAllEntity();
         this.message = "Вы уверены, что хотите удалить этот продукт?";
         this.removeEntityMessage = "Удалить продукт";
     }
@@ -44,12 +44,12 @@ public class ProductPane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i+1);
             TextField titleTextField = new TextField(productList.get(i).getTitle());
-            titleTextField.setPrefWidth(200);
-            this.add(titleTextField, 1, i+1);
-            TextField weightTextField = new TextField(String.valueOf(product.getWeight()));
-            weightTextField.setPrefWidth(70);
-            weightTextField.setAlignment(Pos.CENTER);
-            this.add(weightTextField, 2, i+1);
+            titleTextField.setPrefWidth(270);
+            this.add(titleTextField, 1, i+1,2,1);
+            //TextField weightTextField = new TextField(String.valueOf(product.getWeight()));
+            //weightTextField.setPrefWidth(70);
+            //weightTextField.setAlignment(Pos.CENTER);
+            //this.add(weightTextField, 2, i+1);
             TextField coastTextField = new TextField(String.valueOf(product.getCoast()));
             coastTextField.setPrefWidth(70);
             coastTextField.setAlignment(Pos.CENTER);
@@ -68,17 +68,17 @@ public class ProductPane extends AbstractPane {
         numberLabel.setPrefHeight(40);
         numberLabel.setPrefWidth(40);
         Label productTitlelabel = new Label("Наименование");
-        productTitlelabel.setPrefWidth(200);
+        productTitlelabel.setPrefWidth(270);
         productTitlelabel.setAlignment(Pos.CENTER);
-        Label weigthLabel = new Label("Вес");
-        weigthLabel.setPrefWidth(70);
-        weigthLabel.setAlignment(Pos.CENTER);
+        //Label weigthLabel = new Label("Вес");
+        //weigthLabel.setPrefWidth(70);
+        //weigthLabel.setAlignment(Pos.CENTER);
         Label coastLabel = new Label("Цена");
         coastLabel.setPrefWidth(70);
         coastLabel.setAlignment(Pos.CENTER);
         this.add(numberLabel, 0, 0);
         this.add(productTitlelabel, 1, 0);
-        this.add(weigthLabel, 2, 0);
+        //this.add(weigthLabel, 2, 0);
         this.add(coastLabel, 3, 0);
     }
 

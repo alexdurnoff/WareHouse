@@ -4,12 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.print.*;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
@@ -27,17 +30,12 @@ public class PrintForm {
     public PrintForm(Order order) {
         this.order = order;
         this.gridPane = new GridPane();
-        //this.gridPane.setPrefWidth(420);
-        //this.getGridPane().setPrefHeight(594);
         this.tableView = new TableView<>();
         setupTableView();
         setupGridPane();
     }
 
     private void setupTableView() {
-        /*this.tableView.setPrefWidth(402);
-        this.tableView.setMaxWidth(402);
-        this.tableView.setMinWidth(402);*/
         ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
         numberColumn.setPrefWidth(50);
@@ -52,12 +50,12 @@ public class PrintForm {
         this.tableView.getColumns().addAll(numberColumn, titleColumn, countColumn, coastColumn, sumColumn);
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        //countColumn.setCellValueFactory(new PropertyValueFactory<>("weigth"));
         countColumn.setCellValueFactory(new PropertyValueFactory<>("convert"));
         coastColumn.setCellValueFactory(new PropertyValueFactory<>("coast"));
         sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
         this.tableView.setItems(productWrappers);
     }
+
 
     private ObservableList<ProductWrapper> getProductWrapperList() {
         List<Product> productList = this.order.getProductList();
@@ -84,7 +82,7 @@ public class PrintForm {
         Label orderTitleLabel = new Label(this.order.getTitle());
         orderTitleLabel.setAlignment(Pos.BASELINE_CENTER);
         orderTitleLabel.setPrefWidth(400);
-        orderTitleLabel.setFont(new Font(16));
+        orderTitleLabel.setFont(Font.font("Serif", FontWeight.BOLD, 16));
         Label toLeftLabel = new Label("Кому");
         toLeftLabel.setAlignment(Pos.BASELINE_LEFT);
         toLeftLabel.setPrefWidth(40);
@@ -116,19 +114,11 @@ public class PrintForm {
         jobSettings.setPageLayout(pageLayout);
         double scaleX = 1.3;
         double scaleY = 1.3;
-        /*double scaleX = pageLayout.getPrintableWidth() / this.gridPane.getBoundsInParent().getWidth();
-        double scaleY = pageLayout.getPrintableHeight() / this.gridPane.getBoundsInParent().getHeight();*/
         this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));
-       /*if(job != null){
-            boolean succes = job.printPage(this.gridPane);
-            if (succes) job.endJob();
-        }*/
-       if (job == null) return;
         boolean proceed = job.showPrintDialog(null);
-
         if (proceed) {
-            boolean succes = job.printPage(pageLayout, this.gridPane);
-            if (succes) job.endJob();
+            boolean success = job.printPage(pageLayout, this.gridPane);
+            if (success) job.endJob();
         }
     }
 

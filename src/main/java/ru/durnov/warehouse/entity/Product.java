@@ -21,6 +21,13 @@ public class Product extends Entity{
         this.weight =weight;
     }
 
+    public Product(String productTitle, double coast, double weight, int productNumber) {
+        super(productTitle);
+        this.coast = coast;
+        this.weight = weight;
+        this.numberInOrder = productNumber;
+    }
+
     public double getWeight() {
         return weight;
     }

@@ -11,8 +11,10 @@ import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.Store;
+import ru.durnov.warehouse.print.ViewForm;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +38,20 @@ public class OrderForm extends AbstractPane {
         this.store = (Store) storeDao.getAllEntity().get(0);
         this.productList = productDao.getAllEntity();
         selectStore(this);
-        int number = orderDao.getAllEntity().size();
+        //int number = orderDao.getAllEntity().size();
+        int number = getCurrentNumberForNewOrder();
         this.order = new Order(number + 1, store);
         this.rowCount = 0;
+    }
+
+    private int getCurrentNumberForNewOrder() throws SQLException {
+        int max = 0;
+        List<Entity> entityList = this.orderDao.getAllEntity();
+        for (Entity entity : entityList){
+            Order order = (Order) entity;
+            if (order.getId() > max) max = order.getId();
+        }
+        return max;
     }
 
     private void setupFirstStore(EntityDaoService storeDao) {
@@ -160,6 +173,7 @@ public class OrderForm extends AbstractPane {
 
 
     public void print() {
+        new ViewForm(order).show();
     }
 
     public void save() {
