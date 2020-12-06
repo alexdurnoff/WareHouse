@@ -27,7 +27,7 @@ public class WareHouseApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Программа для работы со складской базой");
+        primaryStage.setTitle("Ферма цех");
         setupDao();
         this.rootNode = new GridPane();
         rootNode.setAlignment(Pos.TOP_CENTER);
@@ -133,6 +133,12 @@ public class WareHouseApplication extends Application {
     }
 
     private void backToTheStartWindow() {
+        if (this.scrollPane.getContent().getClass() == OrderForm.class){
+            OrderForm orderForm = (OrderForm) this.scrollPane.getContent();
+            if (! (orderForm.getIsSaved() || orderForm.getDontSave())){
+                orderForm.showSavedDialog();
+            }
+        }
         this.rootNode.getChildren().remove(this.scrollPane);
         removeAllButtons();
         addButtons();

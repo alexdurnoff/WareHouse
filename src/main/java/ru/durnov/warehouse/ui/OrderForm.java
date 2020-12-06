@@ -3,9 +3,8 @@ package ru.durnov.warehouse.ui;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
@@ -16,6 +15,7 @@ import ru.durnov.warehouse.print.ViewForm;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class OrderForm extends AbstractPane {
@@ -26,6 +26,8 @@ public class OrderForm extends AbstractPane {
     private Store store;
     private final Order order;
     private int rowCount;
+    private boolean isSaved;
+    private boolean dontSave;
 
 
     public OrderForm(EntityDaoService orderDao, EntityDaoService productDao, EntityDaoService storeDao) throws SQLException {
@@ -35,13 +37,13 @@ public class OrderForm extends AbstractPane {
         this.orderDao = orderDao;
         this.storeDao = storeDao;
         if(storeDao.getAllEntity().size() < 1) setupFirstStore(storeDao);
-        this.store = (Store) storeDao.getAllEntity().get(0);
+        //this.store = (Store) storeDao.getAllEntity().get(0);
         this.productList = productDao.getAllEntity();
         selectStore(this);
-        //int number = orderDao.getAllEntity().size();
         int number = getCurrentNumberForNewOrder();
         this.order = new Order(number + 1, store);
         this.rowCount = 0;
+        this.isSaved = false;
     }
 
     private int getCurrentNumberForNewOrder() throws SQLException {
@@ -66,7 +68,8 @@ public class OrderForm extends AbstractPane {
     }
 
     private void selectStore(OrderForm orderForm) throws SQLException {
-        new StoreChooserPane(this).setStoreForOrderPane();
+        StoreSetupForOrderPane storeSetupMaster = new StoreChoiceDialog(this);
+        storeSetupMaster.setStoreForOrderPane();
     }
 
     @Override
@@ -173,10 +176,22 @@ public class OrderForm extends AbstractPane {
 
 
     public void print() {
+        setupOrderProperties();
+        for (Map.Entry<Product, Double> entry : order.getProductWeigthMap().entrySet()) {
+            Product product = entry.getKey();
+            Double weigth = entry.getValue();
+            product.setWeight(weigth);
+        }
         new ViewForm(order).show();
     }
 
     public void save() {
+        setupOrderProperties();
+        this.isSaved = true;
+        orderDao.addEntity(order);
+    }
+
+    public void setupOrderProperties(){
         ObservableList<Node> children = this.getChildren();
         //Самое простое. Все предыдущие данные у накладной были с нулевым весом.
         //Это было необходимо для передачи продуктов из ProductChooserPane в orderForm
@@ -200,7 +215,6 @@ public class OrderForm extends AbstractPane {
             order.addProduct(product, weigth);
             productNumber++;
         }
-        orderDao.addEntity(order);
     }
 
     public List<Entity> getProductList() {
@@ -217,5 +231,40 @@ public class OrderForm extends AbstractPane {
 
     public EntityDaoService getStoreDaoService(){
         return this.storeDao;
+    }
+
+    public boolean getIsSaved(){return this.isSaved;}
+
+    public boolean getDontSave(){return dontSave;}
+
+    public void showSavedDialog(){
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setTitle("Сохранение накладной");
+        dialog.setHeaderText("Накладная не сохранена. Сохранить?");
+        Button buttonOk = new Button("Сохранить");
+        Button buttonCancel = new Button("Не сохранять");
+        buttonOk.setOnAction(ae ->{
+            dialog.setResult(true);
+            dialog.close();
+        });
+        buttonCancel.setOnAction(ae -> {
+            dialog.setResult(false);
+            dialog.close();
+        });
+        FlowPane flowPane = new FlowPane();
+        flowPane.getChildren().addAll(buttonOk, buttonCancel);
+        flowPane.setHgap(30);
+        dialog.getDialogPane().setContent(flowPane);
+        Optional<Boolean> resultOptional = dialog.showAndWait();
+        if (resultOptional.isPresent()){
+            boolean result = resultOptional.get();
+            if (result) {
+                this.save();
+            } else {
+                dontSave = true;
+            }
+        } else {
+            dontSave = true;
+        }
     }
 }

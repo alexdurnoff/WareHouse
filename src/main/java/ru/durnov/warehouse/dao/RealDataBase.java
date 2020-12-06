@@ -78,7 +78,6 @@ public class RealDataBase implements WareHouseDatabase{
             double weight = resultSet.getDouble(3);
             double coast = resultSet.getDouble(4);
             int productNumber = resultSet.getInt(5);
-            System.out.println(weight);
             if (orderStr.equals(order.getTitle())) productSet.add(new Product(productTitle,coast, weight, productNumber));
         }
         return productSet;

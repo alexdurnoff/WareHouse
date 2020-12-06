@@ -14,7 +14,7 @@ import ru.durnov.warehouse.entity.Store;
 import java.sql.SQLException;
 import java.util.List;
 
-public class StoreChooserPane {
+public class StoreChooserPane implements StoreSetupForOrderPane{
     private final OrderForm orderForm;
     private final List<Entity> storeList;
 

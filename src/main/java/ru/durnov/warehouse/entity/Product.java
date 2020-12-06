@@ -4,6 +4,7 @@ public class Product extends Entity{
     private double weight;
     private double coast;
     private int numberInOrder;
+    private String unit;
 
     public Product(String title){
         super(title);
@@ -49,6 +50,10 @@ public class Product extends Entity{
     }
 
     public int getNumberInOrder(){return numberInOrder;}
+
+    public void setUnit(String unit){
+        this.unit = unit;
+    }
 
     @Override
     public boolean equals(Object obj) {
