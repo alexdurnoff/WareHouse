@@ -15,10 +15,10 @@ public interface WareHouseDatabase {
     public Set<Product> getProductSet() throws SQLException;
     public Set<Product> getProductForOrder(Order order) throws SQLException;
 
-    public void addOrderToWareHouse(Order order);
-    public void addStoreToDataBase(Store store);
+    public void addOrderToWareHouse(Order order) throws SQLException;
+    public void addStoreToDataBase(Store store) throws SQLException;
     public void addProductToStore(Store store, Product product);
-    public void addProductToWareHouse(Product product);
+    public void addProductToWareHouse(Product product) throws SQLException;
 
     public void removeOrder(Order order);
     public void removeProductFromStore(Store store, Product product);

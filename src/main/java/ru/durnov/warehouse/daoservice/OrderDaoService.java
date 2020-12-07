@@ -43,7 +43,7 @@ public class OrderDaoService implements EntityDaoService {
     }
 
     @Override
-    public void addEntity(Entity entity) {
+    public void addEntity(Entity entity) throws SQLException {
         Order order = (Order) entity;
         this.database.addOrderToWareHouse(order);
         this.database.addProductsToOrder(order);

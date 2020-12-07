@@ -77,4 +77,5 @@ public class Order extends Entity {
     public void setStore(Store store) {
         this.store = store;
     }
+
 }

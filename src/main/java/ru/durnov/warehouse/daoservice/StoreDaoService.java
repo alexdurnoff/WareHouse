@@ -47,7 +47,7 @@ public class StoreDaoService implements EntityDaoService {
     }
 
     @Override
-    public void addEntity(Entity entity) {
+    public void addEntity(Entity entity) throws SQLException {
         Store store = (Store) entity;
         this.database.addStoreToDataBase(store);
     }

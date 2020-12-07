@@ -17,7 +17,7 @@ public interface EntityDaoService {
     public default void removeEntityByid(int id){
 
     };
-    public void addEntity(Entity entity);
+    public void addEntity(Entity entity) throws SQLException;
     public default void addStoreProductpair(Store store, Product product){
 
     }

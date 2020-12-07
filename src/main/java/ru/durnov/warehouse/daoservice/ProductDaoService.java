@@ -47,7 +47,7 @@ public class ProductDaoService implements EntityDaoService {
     }
 
     @Override
-    public void addEntity(Entity entity) {
+    public void addEntity(Entity entity) throws SQLException {
         Product product = (Product) entity;
         this.database.addProductToWareHouse(product);
     }

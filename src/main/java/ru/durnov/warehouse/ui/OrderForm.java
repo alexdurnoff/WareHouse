@@ -56,7 +56,7 @@ public class OrderForm extends AbstractPane {
         return max;
     }
 
-    private void setupFirstStore(EntityDaoService storeDao) {
+    private void setupFirstStore(EntityDaoService storeDao) throws SQLException {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Добавление первого магазина в базу");
         dialog.setHeaderText("Введите название магазина");
@@ -185,7 +185,7 @@ public class OrderForm extends AbstractPane {
         new ViewForm(order).show();
     }
 
-    public void save() {
+    public void save() throws SQLException {
         setupOrderProperties();
         this.isSaved = true;
         orderDao.addEntity(order);
@@ -237,7 +237,7 @@ public class OrderForm extends AbstractPane {
 
     public boolean getDontSave(){return dontSave;}
 
-    public void showSavedDialog(){
+    public void showSavedDialog() throws SQLException {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("Сохранение накладной");
         dialog.setHeaderText("Накладная не сохранена. Сохранить?");

@@ -21,7 +21,11 @@ public class StoreCreator extends SimpleEntityEdit{
         this.button = new Button("Ok");
         button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.entityDaoService.addEntity(entity);
+            try {
+                pane.entityDaoService.addEntity(entity);
+            } catch (SQLException throwables) {
+
+            }
             try {
                 pane.refresh();
             } catch (SQLException throwables) {

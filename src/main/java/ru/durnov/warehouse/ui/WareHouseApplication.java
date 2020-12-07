@@ -105,7 +105,13 @@ public class WareHouseApplication extends Application {
         int i = 1;
         Button rootButton = new Button("Главное окно");
         this.rootNode.add(rootButton, 0, 0);
-        rootButton.setOnAction(ae -> backToTheStartWindow());
+        rootButton.setOnAction(ae -> {
+            try {
+                backToTheStartWindow();
+            } catch (SQLException ignored) {
+
+            }
+        });
         if (pane.getAddEntityButton() != null){
             pane.getAddEntityButton().setOnAction(ae -> {
                 try {
@@ -122,7 +128,13 @@ public class WareHouseApplication extends Application {
             OrderForm orderForm = (OrderForm) pane;
             Button saveButton = new Button("Сохранить");
             Button printButton = new Button("Печать");
-            saveButton.setOnAction(ae -> orderForm.save());
+            saveButton.setOnAction(ae -> {
+                try {
+                    orderForm.save();
+                } catch (SQLException ignored) {
+
+                }
+            });
             this.rootNode.add(saveButton,i, 0);
             i++;
             printButton.setOnAction(ae -> orderForm.print());
@@ -135,7 +147,7 @@ public class WareHouseApplication extends Application {
         pane.show();
     }
 
-    private void backToTheStartWindow() {
+    private void backToTheStartWindow() throws SQLException {
         if (this.scrollPane.getContent().getClass() == OrderForm.class){
             OrderForm orderForm = (OrderForm) this.scrollPane.getContent();
             if (! (orderForm.getIsSaved() || orderForm.getDontSave())){

@@ -24,7 +24,11 @@ public abstract class NewEntityCreator extends SimpleEntityEdit {
         this.button.setText(addButtonTitle);
         this.button.setOnAction(ae -> {
             setupEntityProrepties(entity);
-            pane.entityDaoService.addEntity(entity);
+            try {
+                pane.entityDaoService.addEntity(entity);
+            } catch (SQLException ignored) {
+
+            }
             try {
                 pane.refresh();
             } catch (SQLException throwables) {

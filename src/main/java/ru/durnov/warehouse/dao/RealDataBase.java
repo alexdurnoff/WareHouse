@@ -85,33 +85,46 @@ public class RealDataBase implements WareHouseDatabase{
     }
 
     @Override
-    public void addOrderToWareHouse(Order order) {
-        String firstStr = "insert into ordertable values(";
-        String id = String.valueOf(order.getId());
-        String store = '"' + order.getStore().toString() + '"';
-        String date = '"' + order.getDate() + '"';
-        String request = firstStr + id + ", " + store + ", " + date + ");";
-        connector.executeUpdateRequest(request);
+    public void addOrderToWareHouse(Order order) throws SQLException {
+        Set<Order> orderSet = getOrders();
+        if (!(orderSet.contains(order))){
+            String firstStr = "insert into ordertable values(";
+            String id = String.valueOf(order.getId());
+            String store = '"' + order.getStore().toString() + '"';
+            String date = '"' + order.getDate() + '"';
+            String request = firstStr + id + ", " + store + ", " + date + ");";
+            connector.executeUpdateRequest(request);
+        }
     }
 
     @Override
-    public void addStoreToDataBase(Store store) {
-        String request = "insert into storetable values(" + '"' + store.getTitle() + '"' + ");";
-        connector.executeUpdateRequest(request);
+    public void addStoreToDataBase(Store store) throws SQLException {
+        Set<Store> storeSet = getStoreSet();
+        if (!(storeSet.contains(store))){
+            String request = "insert into storetable values(" + '"' + store.getTitle() + '"' + ");";
+            connector.executeUpdateRequest(request);
+        }
     }
 
     @Override
     public void addProductToStore(Store store, Product product) {
-        String request = "insert into storeproducttable values(" + '"' + store.getTitle() + '"' + ", " + '"'+
-                product.getTitle() + '"' + ", " + product.getWeight() + ");";
-        connector.executeUpdateRequest(request);
+        Set<StoreProductPair> storeProductPairSet = getStoreProductPairSet(store.getTitle());
+        StoreProductPair storeProductPair = new StoreProductPair(store, product);
+        if (!(storeProductPairSet.contains(storeProductPair))){
+            String request = "insert into storeproducttable values(" + '"' + store.getTitle() + '"' + ", " + '"'+
+                    product.getTitle() + '"' + ", " + product.getWeight() + ");";
+            connector.executeUpdateRequest(request);
+        }
     }
 
     @Override
-    public void addProductToWareHouse(Product product) {
-        String request = "insert into producttable values(" + '"' + product.getTitle() + '"' +
-                ", " + '"' + product.getCoast() + '"' + ", " + '"' + product.getUnit() +'"' +  ");";
-        connector.executeUpdateRequest(request);
+    public void addProductToWareHouse(Product product) throws SQLException {
+        Set<Product> productSet = getProductSet();
+        if(!(productSet.contains(product))){
+            String request = "insert into producttable values(" + '"' + product.getTitle() + '"' +
+                    ", " + '"' + product.getCoast() + '"' + ", " + '"' + product.getUnit() +'"' +  ");";
+            connector.executeUpdateRequest(request);
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ public class AddFirstStorePane extends Application {
         launch();
     }
 
-    protected void setupEntityProrepties(Store store) {
+    protected void setupEntityProrepties(Store store) throws SQLException {
         this.service.addEntity(store);
         stage.close();
     }
@@ -44,7 +44,13 @@ public class AddFirstStorePane extends Application {
         stage.setScene(scene);
         stage.setTitle("Необходимо добавить первый магазин в базу");
         Button buttonOk = new Button("Ok");
-        buttonOk.setOnAction(ae -> setupEntityProrepties(new Store("")));
+        buttonOk.setOnAction(ae -> {
+            try {
+                setupEntityProrepties(new Store(""));
+            } catch (SQLException ignored) {
+
+            }
+        });
         Label label1 = new Label("Перед созданием накладной необходимо добавить ");
         label1.setPrefWidth(400);
         label1.setAlignment(Pos.CENTER);
