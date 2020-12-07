@@ -6,12 +6,11 @@ import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.print.PrintForm;
 
 public class ProductEditorDialog extends Dialog<Boolean> {
-    private Product product;
 
     public ProductEditorDialog(Product product){
-        this.product = product;
         Label titleLabel = new Label(product.getTitle());
         TextField coastthTextField = new TextField(String.valueOf(product.getWeight()));
+        coastthTextField.setText(String.format("%.2f", product.getCoast()));
         coastthTextField.textProperty().addListener((observable,oldValue, newValue) ->{
             try {
                 double coast = Double.parseDouble(coastthTextField.getText().replace(',', '.'));
@@ -22,7 +21,7 @@ public class ProductEditorDialog extends Dialog<Boolean> {
         });
         TextField unitTextField = new TextField(product.getUnit());
         unitTextField.setOnAction(ae -> product.setUnit(unitTextField.getText()));
-        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeOk = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         GridPane gridPane = new GridPane();
         gridPane.add(new Label("Наименование"), 0, 0);
         gridPane.add(new Label("Стоимость"), 1, 0);
