@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.print.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -15,19 +16,23 @@ public class ViewForm {
     private final PrintForm printForm;
     private Scene scene;
     private GridPane rootNode;
+    private Stage stage;
+    private Order order;
 
     public ViewForm(Order order){
+        this.order = order;
         this.printForm = new PrintForm(order);
     }
 
     public void show(){
         this.rootNode = new GridPane();
         this.scene = new Scene(rootNode);
-        Stage stage = new Stage();
+        this.stage = new Stage();
         stage.setScene(scene);
         Button buttonPrint = new Button("Печать");
         Button buttonClose = new Button("Закрыть");
-        buttonPrint.setOnAction(ae -> this.printForm.print());
+        //buttonPrint.setOnAction(ae -> this.printForm.print());
+        buttonPrint.setOnAction(ae -> print());
         buttonClose.setOnAction(ae -> stage.close());
         printForm.getGridPane().setAlignment(Pos.CENTER);
         rootNode.add(printForm.getGridPane(), 0,0, 2, 1);
@@ -42,15 +47,18 @@ public class ViewForm {
     public void print(){
         javafx.print.PrinterJob job = PrinterJob.createPrinterJob();
         JobSettings jobSettings = job.getJobSettings();
-        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, 10, 50, 10, 10);
         jobSettings.setPageLayout(pageLayout);
-        double scaleX = pageLayout.getPrintableWidth() / this.printForm.getGridPane().getBoundsInParent().getWidth();
-        double scaleY = pageLayout.getPrintableHeight() / this.printForm.getGridPane().getBoundsInParent().getHeight();
-        this.rootNode.getTransforms().add(new Scale(scaleX, scaleY));
-        if (job == null) return;
+        GridPane printPane = new GridPane();
+        printPane.getTransforms().add(new Scale(0.9,0.9));
+        PrintForm printForm1 = new PrintForm(this.order);
+        printPane.add(this.printForm.getGridPane(), 0, 0);
+        printPane.setHgap(20);
+        printPane.add(printForm1.getGridPane(), 2, 0);
+        stage.close();
         boolean proceed = job.showPrintDialog(null);
         if (proceed) {
-            boolean succes = job.printPage(pageLayout, this.printForm.getGridPane());
+            boolean succes = job.printPage(pageLayout, printPane);
             if (succes) job.endJob();
         }
     }
