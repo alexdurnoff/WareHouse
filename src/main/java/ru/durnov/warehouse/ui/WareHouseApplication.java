@@ -21,7 +21,6 @@ public class WareHouseApplication extends Application {
     private ScrollPane scrollPane;
     private EntityDaoService productDao;
     private EntityDaoService storeDao;
-    private EntityDaoService customerDao;
     private EntityDaoService orderDao;
     private List<Button> buttonList;
 
@@ -36,7 +35,7 @@ public class WareHouseApplication extends Application {
         this.buttonList = new ArrayList<>();
         addButtons();
         OrderArchivPane orderArchivPane = new OrderArchivPane(this.orderDao);
-        rootNode.add(orderArchivPane, 0, 1, 3, 1);
+        rootNode.add(orderArchivPane, 0, 1, 4, 1);
         rootNode.setVgap(20);
         orderArchivPane.show();
         Scene scene = new Scene(rootNode, 900, 700);

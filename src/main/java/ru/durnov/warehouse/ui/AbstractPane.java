@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPane extends GridPane {
-    private List<Entity> entityList;
+    private final List<Entity> entityList;
     protected EntityDaoService entityDaoService;
     private Button addEntityButton;
     protected String message;

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class RealDataBase implements WareHouseDatabase{
-    private SqliteDaoConnector connector;
+    private final SqliteDaoConnector connector;
 
     public RealDataBase() throws SQLException {
         this.connector = new SqliteDaoConnector();
@@ -55,7 +55,8 @@ public class RealDataBase implements WareHouseDatabase{
         while (resultSet.next()){
             String title = resultSet.getString("product");
             double coast = Double.parseDouble(resultSet.getString(2));
-            productSet.add(new Product(title,coast));
+            String unit = resultSet.getString("unit");
+            productSet.add(new Product(title,coast, unit));
         }
         return productSet;
     }
@@ -109,7 +110,7 @@ public class RealDataBase implements WareHouseDatabase{
     @Override
     public void addProductToWareHouse(Product product) {
         String request = "insert into producttable values(" + '"' + product.getTitle() + '"' +
-                ", " + '"' + product.getCoast() + '"' + ");";
+                ", " + '"' + product.getCoast() + '"' + ", " + '"' + product.getUnit() +'"' +  ");";
         connector.executeUpdateRequest(request);
     }
 
@@ -118,7 +119,8 @@ public class RealDataBase implements WareHouseDatabase{
         Map<Product, Double> productWeigthMap = order.getProductWeigthMap();
         productWeigthMap.forEach(((product, weigth) -> {
             String request = "insert into orderproducttable values(" + '"' + order.getTitle() + '"' +
-                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + ", " + product.getNumberInOrder()+ ");";
+                    ", " + '"' + product.getTitle() + '"' + ", " + weigth + ", " + product.getCoast() + ", " + product.getNumberInOrder()+
+                    ", " + '"' + product.getUnit() + '"' + ");";
             this.connector.executeUpdateRequest(request);
         }));
     }

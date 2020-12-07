@@ -18,6 +18,7 @@ public class Order extends Entity {
         this.productWeigthMap = new HashMap<>();
         this.store = store;
         this.id = id;
+        this.date = LocalDate.now().toString();
     }
 
     public Order(int id, Store store, String date){

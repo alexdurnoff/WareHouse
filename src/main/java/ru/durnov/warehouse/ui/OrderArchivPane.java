@@ -89,8 +89,9 @@ public class OrderArchivPane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, this.rowCount);
             this.add(new TextField(dataOrderList.get(i).getTitle()), 1, this.rowCount);
-            this.add(new PrintButton(order), 2, this.rowCount);
-            this.add(new RemoveEntityButton(order), 3, this.rowCount);
+            this.add(new TextField(dataOrderList.get(i).getStore().getTitle()), 2, this.rowCount);
+            this.add(new PrintButton(order), 3, this.rowCount);
+            this.add(new RemoveEntityButton(order), 4, this.rowCount);
         }
         rowCount++;
     }

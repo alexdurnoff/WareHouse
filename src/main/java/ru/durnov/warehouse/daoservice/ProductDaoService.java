@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ProductDaoService implements EntityDaoService {
-    private WareHouseDatabase database;
+    private final WareHouseDatabase database;
 
     public ProductDaoService(WareHouseDatabase database){
         this.database = database;

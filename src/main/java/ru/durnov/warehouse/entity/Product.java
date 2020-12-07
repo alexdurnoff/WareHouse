@@ -4,7 +4,7 @@ public class Product extends Entity{
     private double weight;
     private double coast;
     private int numberInOrder;
-    private String unit;
+    private String unit = "кг";
 
     public Product(String title){
         super(title);
@@ -27,6 +27,20 @@ public class Product extends Entity{
         this.coast = coast;
         this.weight = weight;
         this.numberInOrder = productNumber;
+    }
+
+    public Product (String productTitle, double coast, double weight, int productNumber, String unit){
+        super(productTitle);
+        this.coast = coast;
+        this.weight = weight;
+        this.numberInOrder = productNumber;
+        this.unit = unit;
+    }
+
+    public Product(String productTitle, double coast, String unit){
+        super(productTitle);
+        this.coast = coast;
+        this.unit = unit;
     }
 
     public double getWeight() {
@@ -61,5 +75,9 @@ public class Product extends Entity{
         if (!(obj.getClass() == Product.class)) return false;
         Product product = (Product) obj;
         return this.getTitle().equals(product.getTitle());
+    }
+
+    public String getUnit() {
+        return unit;
     }
 }

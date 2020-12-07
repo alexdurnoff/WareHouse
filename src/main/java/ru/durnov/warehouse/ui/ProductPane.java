@@ -45,11 +45,11 @@ public class ProductPane extends AbstractPane {
             this.add(label,0, i+1);
             TextField titleTextField = new TextField(productList.get(i).getTitle());
             titleTextField.setPrefWidth(270);
-            this.add(titleTextField, 1, i+1,2,1);
-            //TextField weightTextField = new TextField(String.valueOf(product.getWeight()));
-            //weightTextField.setPrefWidth(70);
-            //weightTextField.setAlignment(Pos.CENTER);
-            //this.add(weightTextField, 2, i+1);
+            this.add(titleTextField, 1, i+1);
+            TextField unitTextField = new TextField(String.valueOf(product.getUnit()));
+            unitTextField.setPrefWidth(70);
+            unitTextField.setAlignment(Pos.CENTER);
+            this.add(unitTextField, 2, i+1);
             TextField coastTextField = new TextField(String.valueOf(product.getCoast()));
             coastTextField.setPrefWidth(70);
             coastTextField.setAlignment(Pos.CENTER);
@@ -70,15 +70,15 @@ public class ProductPane extends AbstractPane {
         Label productTitlelabel = new Label("Наименование");
         productTitlelabel.setPrefWidth(270);
         productTitlelabel.setAlignment(Pos.CENTER);
-        //Label weigthLabel = new Label("Вес");
-        //weigthLabel.setPrefWidth(70);
-        //weigthLabel.setAlignment(Pos.CENTER);
+        Label unitLabel = new Label("кг/шт");
+        unitLabel.setPrefWidth(70);
+        unitLabel.setAlignment(Pos.CENTER);
         Label coastLabel = new Label("Цена");
         coastLabel.setPrefWidth(70);
         coastLabel.setAlignment(Pos.CENTER);
         this.add(numberLabel, 0, 0);
         this.add(productTitlelabel, 1, 0);
-        //this.add(weigthLabel, 2, 0);
+        this.add(unitLabel, 2, 0);
         this.add(coastLabel, 3, 0);
     }
 
