@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
+import ru.durnov.warehouse.entity.DataConvertorForOrder;
 import ru.durnov.warehouse.entity.Order;
 import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.ProductWrapper;
@@ -76,7 +77,7 @@ public class PrintForm {
     }
 
     private void setupGridPane() {
-        Label dateLabel = new Label(this.order.getDate());
+        Label dateLabel = new Label(new DataConvertorForOrder(this.order.getDate()).convertDate());
         dateLabel.setAlignment(Pos.BASELINE_RIGHT);
         dateLabel.setPrefWidth(400);
         Label orderTitleLabel = new Label(this.order.getTitle());
