@@ -35,6 +35,10 @@ public class WareHouseApplication extends Application {
         rootNode.getColumnConstraints().addAll(getColumns());
         this.buttonList = new ArrayList<>();
         addButtons();
+        OrderArchivPane orderArchivPane = new OrderArchivPane(this.orderDao);
+        rootNode.add(orderArchivPane, 0, 1, 3, 1);
+        rootNode.setVgap(20);
+        orderArchivPane.show();
         Scene scene = new Scene(rootNode, 900, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -78,22 +82,22 @@ public class WareHouseApplication extends Application {
                 throwables.printStackTrace();
             }
         });
-        Button orderArchivButton = new Button("Архив накладных");
+        /*Button orderArchivButton = new Button("Архив накладных");
         orderArchivButton.setOnAction(ae -> {
             try {
                 showPane(new OrderArchivPane(this.orderDao));
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        });
+        });*/
         rootNode.add(productButton, 0,0);
         rootNode.add(storeButton, 1, 0);
         rootNode.add(orderButton, 2, 0);
-        rootNode.add(orderArchivButton, 3, 0);
+        //rootNode.add(orderArchivButton, 3, 0);
         this.buttonList.add(productButton);
         this.buttonList.add(storeButton);
         this.buttonList.add(orderButton);
-        this.buttonList.add(orderArchivButton);
+        //this.buttonList.add(orderArchivButton);
     }
 
     private void showPane(AbstractPane pane) throws SQLException {

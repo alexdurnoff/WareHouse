@@ -32,12 +32,13 @@ public class StorePane extends AbstractPane {
     public void addEntityToEntityList() throws SQLException {
         constructNewStore();
         this.storeList = this.entityDaoService.getAllEntity();
+        this.storeList.sort(new StoreComparator());
     }
 
     @Override
     public void show() throws SQLException {
         this.storeList = entityDaoService.getAllEntity();
-        //this.storeList.sort(new StoreComparator());
+        this.storeList.sort(new StoreComparator());
         addHeader();
         for (int i = 0; i < storeList.size(); i++){
             Store store = (Store) storeList.get(i);
