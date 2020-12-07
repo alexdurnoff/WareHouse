@@ -139,6 +139,16 @@ public class RealDataBase implements WareHouseDatabase{
     }
 
     @Override
+    public void updateProduct(Product product) {
+        String request = "update producttable set coast = " + product.getCoast() + " where product = " + '"' +
+                product.getTitle() + '"' + ";";
+        connector.executeUpdateRequest(request);
+        request = "update producttable set unit = " + '"' + product.getUnit() + '"' + " where product = " + '"' +
+                product.getTitle() + '"' + ";";
+        connector.executeUpdateRequest(request);
+    }
+
+    @Override
     public void removeOrder(Order order) {
         String request = "delete from ordertable where id='" + order.getId() + "';";
         connector.executeUpdateRequest(request);

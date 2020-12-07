@@ -47,8 +47,8 @@ public class StorePane extends AbstractPane {
             label.setAlignment(Pos.CENTER);
             this.add(label,0, i+1);
             this.add(new TextField(storeList.get(i).getTitle()), 1, i+1);
-            this.add(new EditStoreButton(store), 2, i+1);
-            this.add(new RemoveEntityButton(store), 3, i+1);
+            //this.add(new EditStoreButton(store), 2, i+1); Отказался. Бессмысленно. Только название редактировать. Проще добавить новый...
+            this.add(new RemoveEntityButton(store), 2, i+1);
         }
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);

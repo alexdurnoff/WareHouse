@@ -26,4 +26,6 @@ public interface WareHouseDatabase {
     public void removeProduct(Product product);
 
     void addProductsToOrder(Order order);
+
+    void updateProduct(Product product);
 }

@@ -52,6 +52,11 @@ public class StoreDaoService implements EntityDaoService {
         this.database.addStoreToDataBase(store);
     }
 
+    @Override
+    public void updateProduct(Product product) {
+
+    }
+
     public void addProductToStore(Store store, Product product){
         this.database.addProductToStore(store, product);
     }

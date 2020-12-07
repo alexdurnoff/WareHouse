@@ -73,4 +73,9 @@ public class DummyOrderDaoServiceImpl implements EntityDaoService {
     public void addEntity(Entity entity) {
         this.orderList.add(entity);
     }
+
+    @Override
+    public void updateProduct(Product product) {
+
+    }
 }

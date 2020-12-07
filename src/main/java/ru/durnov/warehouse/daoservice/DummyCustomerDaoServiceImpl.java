@@ -2,6 +2,7 @@ package ru.durnov.warehouse.daoservice;
 
 import ru.durnov.warehouse.entity.Customer;
 import ru.durnov.warehouse.entity.Entity;
+import ru.durnov.warehouse.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,11 @@ public class DummyCustomerDaoServiceImpl implements EntityDaoService {
     @Override
     public void addEntity(Entity customer) {
         customerList.add((Customer) customer);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+
     }
 
     @Override

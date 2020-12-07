@@ -93,7 +93,8 @@ public class ProductPane extends AbstractPane {
     }
 
     private void editProduct(Product product) {
-        new ProductEditor(this, product).show();
+        new ProductEditorDialog(product).showAndWait();
+        this.entityDaoService.updateProduct(product);
     }
 
 }

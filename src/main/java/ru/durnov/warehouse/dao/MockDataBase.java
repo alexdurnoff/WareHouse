@@ -165,4 +165,9 @@ public class MockDataBase implements WareHouseDatabase{
     public void addProductsToOrder(Order order) {
 
     }
+
+    @Override
+    public void updateProduct(Product product) {
+
+    }
 }

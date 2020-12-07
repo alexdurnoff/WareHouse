@@ -49,6 +49,11 @@ public class OrderDaoService implements EntityDaoService {
         this.database.addProductsToOrder(order);
     }
 
+    @Override
+    public void updateProduct(Product product) {
+
+    }
+
     public void setupOrders(ObservableList<Entity> orders){
         orders.forEach(entity -> {
             Order order = (Order) entity;

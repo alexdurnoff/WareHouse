@@ -52,4 +52,9 @@ public class ProductDaoService implements EntityDaoService {
         this.database.addProductToWareHouse(product);
     }
 
+    @Override
+    public void updateProduct(Product product) {
+        this.database.updateProduct(product);
+    }
+
 }

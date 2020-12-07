@@ -21,4 +21,6 @@ public interface EntityDaoService {
     public default void addStoreProductpair(Store store, Product product){
 
     }
+
+    void updateProduct(Product product);
 }
