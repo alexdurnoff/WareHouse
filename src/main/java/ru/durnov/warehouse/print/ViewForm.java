@@ -10,10 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Order;
+import ru.durnov.warehouse.entity.Product;
+
+import java.util.List;
 
 public class ViewForm {
-    private final PrintForm printForm;
+    private PrintForm printForm;
     private Scene scene;
     private GridPane rootNode;
     private Stage stage;
@@ -45,6 +49,27 @@ public class ViewForm {
     }
 
     public void print(){
+        if (this.order.getProductList().size() < 13) {
+            simplePrint();
+        } else {
+            multiPagePrint();
+        }
+    }
+
+    private void multiPagePrint() {
+        List<Product> lastProductList = this.order.getProductList().subList(13, this.order.getProductList().size());
+        List<Product> firstProductList = this.order.getProductList().subList(0,12);
+        this.order.setProductList(firstProductList);
+        this.printForm = new PrintForm(order);
+        simplePrint();
+        this.order.setProductList(lastProductList);
+        this.printForm = new PrintForm(order);
+        simplePrint();
+        /*PrintForm printForm1 = new PrintForm(this.order, lastProductList);
+        simplePrint(printForm1);*/
+    }
+
+    public void simplePrint(){
         javafx.print.PrinterJob job = PrinterJob.createPrinterJob();
         JobSettings jobSettings = job.getJobSettings();
         PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, 10, 50, 10, 10);
@@ -56,10 +81,25 @@ public class ViewForm {
         printPane.setHgap(20);
         printPane.add(printForm1.getGridPane(), 2, 0);
         stage.close();
-        boolean proceed = job.showPrintDialog(null);
+        /*boolean proceed = job.showPrintDialog(null);
         if (proceed) {
             boolean succes = job.printPage(pageLayout, printPane);
             if (succes) job.endJob();
+        }*/
+
+        boolean printed = job.printPage(pageLayout, printPane);
+        if (printed){
+            job.endJob();
         }
+    }
+
+    private void setupPageRange(JobSettings jobSettings) {
+        PageRange pageRange;
+        if (this.order.getProductList().size()>10){
+            pageRange = new PageRange(1,2);
+        } else {
+            pageRange = new PageRange(1,1);
+        }
+        jobSettings.setPageRanges(pageRange);
     }
 }

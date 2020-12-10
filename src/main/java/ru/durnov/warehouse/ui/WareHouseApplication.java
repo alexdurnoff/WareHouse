@@ -23,6 +23,7 @@ public class WareHouseApplication extends Application {
     private EntityDaoService storeDao;
     private EntityDaoService orderDao;
     private List<Button> buttonList;
+    private OrderArchivPane orderArchivPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,7 +35,7 @@ public class WareHouseApplication extends Application {
         rootNode.getColumnConstraints().addAll(getColumns());
         this.buttonList = new ArrayList<>();
         addButtons();
-        OrderArchivPane orderArchivPane = new OrderArchivPane(this.orderDao);
+        this.orderArchivPane = new OrderArchivPane(this.orderDao);
         rootNode.add(orderArchivPane, 0, 1, 4, 1);
         rootNode.setVgap(20);
         orderArchivPane.show();
@@ -157,6 +158,7 @@ public class WareHouseApplication extends Application {
         this.rootNode.getChildren().remove(this.scrollPane);
         removeAllButtons();
         addButtons();
+        this.orderArchivPane.refresh();
     }
 
     private void removeAllButtons() {

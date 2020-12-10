@@ -260,6 +260,7 @@ public class OrderForm extends AbstractPane {
             boolean result = resultOptional.get();
             if (result) {
                 this.save();
+                this.refresh();
             } else {
                 dontSave = true;
             }
