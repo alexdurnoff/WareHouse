@@ -20,15 +20,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PrintForm {
+public class PrintForm implements Cloneable {
     private final Order order;
-    private final GridPane gridPane;
-    private final TableView<ProductWrapper> tableView;
+    private GridPane gridPane;
+    private TableView<ProductWrapper> tableView;
+    private ObservableList<ProductWrapper> productWrappers;
 
     public PrintForm(Order order) {
         this.order = order;
+        /*this.gridPane = new GridPane();
+        this.tableView = new TableView<>();
+        setupTableView();
+        setupGridPane();*/
+        this.productWrappers = getProductWrapperList();
+        setupGridPaneAndTableView();
+    }
+
+    public void setupGridPaneAndTableView(){
         this.gridPane = new GridPane();
         this.tableView = new TableView<>();
+        //this.productWrappers = getProductWrapperList();
         setupTableView();
         setupGridPane();
     }
@@ -45,7 +56,8 @@ public class PrintForm {
     }
 
     private void setupTableView() {
-        ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
+        //ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
+        //this.productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
         numberColumn.setPrefWidth(50);
         TableColumn<ProductWrapper,String> titleColumn = new TableColumn<>("Наименование");
@@ -115,23 +127,73 @@ public class PrintForm {
         this.getGridPane().setVgap(10);
     }
 
-    public void print() {
-        javafx.print.PrinterJob job = PrinterJob.createPrinterJob(Printer.getDefaultPrinter());
+    public void simplePrint() throws CloneNotSupportedException {
+        javafx.print.PrinterJob job = PrinterJob.createPrinterJob();
         JobSettings jobSettings = job.getJobSettings();
-        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4,
-                PageOrientation.PORTRAIT, 20,10,10,10);
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, 10, 50, 10, 10);
         jobSettings.setPageLayout(pageLayout);
-        double scaleX = 1.3;
-        double scaleY = 1.3;
-        this.gridPane.getTransforms().add(new Scale(scaleX, scaleY));
-        boolean proceed = job.showPrintDialog(null);
-        if (proceed) {
-            boolean success = job.printPage(pageLayout, this.gridPane);
-            if (success) job.endJob();
+        PrintForm printForm1 = (PrintForm) this.clone();
+        GridPane printPane = new GridPane();
+        printPane.getTransforms().add(new Scale(0.9,0.9));
+        addPrintFormsToGridPane(printPane, printForm1);
+        /*printPane.add(this.getGridPane(), 0, 0);
+        printPane.add(printForm1.getGridPane(), 2, 0);
+        printPane.setHgap(20);*/
+        boolean printed = job.printPage(pageLayout, printPane);
+        if (printed){
+            job.endJob();
+        }
+    }
+
+    public void addPrintFormsToGridPane(GridPane printPane, PrintForm printForm1){
+        printPane.add(this.getGridPane(), 0, 0);
+        printPane.add(printForm1.getGridPane(), 2, 0);
+        printPane.setHgap(20);
+    }
+
+    public void print() throws CloneNotSupportedException {
+        if (this.order.getProductList().size() < 12){
+            simplePrint();
+        } else {
+            List<Product> lastProductList = this.order.getProductList().subList(13, this.order.getProductList().size());
+            List<Product> firstProductList = this.order.getProductList().subList(0,12);
+            this.order.setProductList(firstProductList);
+            this.productWrappers = getProductWrapperList();
+            setupGridPaneAndTableView();
+            simplePrint();
+            this.order.setProductList(lastProductList);
+            this.productWrappers = getProductWrapperList();
+            setupGridPaneAndTableView();
+            reiseProductWrappersId();
+            PrintForm printForm1 = new PrintForm(this.order);
+            printForm1.reiseProductWrappersId();
+            printForm1.setupGridPaneAndTableView();
+            GridPane prinPane = new GridPane();
+            addPrintFormsToGridPane(prinPane, printForm1);
+            //simplePrint();
+            print();
+        }
+    }
+
+    private void reiseProductWrappersId() {
+        for (ProductWrapper productWrapper : productWrappers){
+            productWrapper.reiseId(12);
         }
     }
 
     public GridPane getGridPane() {
         return gridPane;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        PrintForm printForm = (PrintForm) super.clone();
+        printForm.productWrappers = this.productWrappers;
+        printForm.setupGridPaneAndTableView();
+        return printForm;
+    }
+
+    public void setProductWrappers(ObservableList<ProductWrapper> productWrappers) {
+        this.productWrappers = productWrappers;
     }
 }

@@ -57,4 +57,8 @@ public class ProductWrapper {
     public String getConvert(){
         return this.convert;
     }
+
+    public void reiseId(int number){
+        this.id = this.id + number;
+    }
 }

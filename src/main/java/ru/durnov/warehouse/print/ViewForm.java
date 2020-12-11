@@ -22,9 +22,11 @@ public class ViewForm {
     private GridPane rootNode;
     private Stage stage;
     private Order order;
+    private List<Product> oldProductList;
 
     public ViewForm(Order order){
         this.order = order;
+        this.oldProductList = this.order.getProductList();
         this.printForm = new PrintForm(order);
     }
 
@@ -35,8 +37,13 @@ public class ViewForm {
         stage.setScene(scene);
         Button buttonPrint = new Button("Печать");
         Button buttonClose = new Button("Закрыть");
-        //buttonPrint.setOnAction(ae -> this.printForm.print());
-        buttonPrint.setOnAction(ae -> print());
+        buttonPrint.setOnAction(ae -> {
+            try {
+                print();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        });
         buttonClose.setOnAction(ae -> stage.close());
         printForm.getGridPane().setAlignment(Pos.CENTER);
         rootNode.add(printForm.getGridPane(), 0,0, 2, 1);
@@ -48,58 +55,11 @@ public class ViewForm {
         stage.show();
     }
 
-    public void print(){
-        if (this.order.getProductList().size() < 13) {
-            simplePrint();
-        } else {
-            multiPagePrint();
-        }
-    }
-
-    private void multiPagePrint() {
-        List<Product> lastProductList = this.order.getProductList().subList(13, this.order.getProductList().size());
-        List<Product> firstProductList = this.order.getProductList().subList(0,12);
-        this.order.setProductList(firstProductList);
-        this.printForm = new PrintForm(order);
-        simplePrint();
-        this.order.setProductList(lastProductList);
-        this.printForm = new PrintForm(order);
-        simplePrint();
-        /*PrintForm printForm1 = new PrintForm(this.order, lastProductList);
-        simplePrint(printForm1);*/
-    }
-
-    public void simplePrint(){
-        javafx.print.PrinterJob job = PrinterJob.createPrinterJob();
-        JobSettings jobSettings = job.getJobSettings();
-        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, 10, 50, 10, 10);
-        jobSettings.setPageLayout(pageLayout);
-        GridPane printPane = new GridPane();
-        printPane.getTransforms().add(new Scale(0.9,0.9));
-        PrintForm printForm1 = new PrintForm(this.order);
-        printPane.add(this.printForm.getGridPane(), 0, 0);
-        printPane.setHgap(20);
-        printPane.add(printForm1.getGridPane(), 2, 0);
+    public void print() throws CloneNotSupportedException {
         stage.close();
-        /*boolean proceed = job.showPrintDialog(null);
-        if (proceed) {
-            boolean succes = job.printPage(pageLayout, printPane);
-            if (succes) job.endJob();
-        }*/
-
-        boolean printed = job.printPage(pageLayout, printPane);
-        if (printed){
-            job.endJob();
-        }
+        this.printForm.print();
+        this.order.setProductList(oldProductList);
     }
 
-    private void setupPageRange(JobSettings jobSettings) {
-        PageRange pageRange;
-        if (this.order.getProductList().size()>10){
-            pageRange = new PageRange(1,2);
-        } else {
-            pageRange = new PageRange(1,1);
-        }
-        jobSettings.setPageRanges(pageRange);
-    }
+
 }
