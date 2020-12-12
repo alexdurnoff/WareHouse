@@ -36,7 +36,7 @@ public class TestRealDataBaseGetOrders {
     }
 
     @Test
-    public void testAddOrderToWareHouse(){
+    public void testAddOrderToWareHouse() throws SQLException {
         Order order1 = new Order(6, new Store("Ферма №3"));
         Order order2 = new Order(7, new Store("Ферма №2"));
         realDataBase.addOrderToWareHouse(order1);
@@ -44,7 +44,7 @@ public class TestRealDataBaseGetOrders {
     }
 
     @Test
-    public void addStoreToDataBase(){
+    public void addStoreToDataBase() throws SQLException {
         Store store = new Store("Ферма №5");
         realDataBase.addStoreToDataBase(store);
     }
@@ -58,7 +58,7 @@ public class TestRealDataBaseGetOrders {
     }
 
     @Test
-    public void testAddProductToWareHouse(){
+    public void testAddProductToWareHouse() throws SQLException {
         Product product = new Product("Курятина", 100.0);
         realDataBase.addProductToWareHouse(product);
     }
