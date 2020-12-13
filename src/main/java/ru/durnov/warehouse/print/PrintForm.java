@@ -111,7 +111,7 @@ public class PrintForm implements Cloneable {
         toRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label fromLeftLabel = new Label("От");
         fromLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
-        Label fromRightLabel = new Label("ИП Соловьев");
+        Label fromRightLabel = new Label("ИП Соловьев C.А.");
         fromRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label producerLabel = new Label("Сдал");
         Label consumerLabel = new Label("Принял");
@@ -152,11 +152,11 @@ public class PrintForm implements Cloneable {
     }
 
     public void print() throws CloneNotSupportedException {
-        if (this.order.getProductList().size() < 12){
+        if (this.order.getProductList().size() < 15){
             simplePrint();
         } else {
-            List<Product> lastProductList = this.order.getProductList().subList(13, this.order.getProductList().size());
-            List<Product> firstProductList = this.order.getProductList().subList(0,12);
+            List<Product> lastProductList = this.order.getProductList().subList(16, this.order.getProductList().size());
+            List<Product> firstProductList = this.order.getProductList().subList(0,15);
             this.order.setProductList(firstProductList);
             this.productWrappers = getProductWrapperList();
             setupGridPaneAndTableView();
@@ -177,7 +177,7 @@ public class PrintForm implements Cloneable {
 
     private void reiseProductWrappersId() {
         for (ProductWrapper productWrapper : productWrappers){
-            productWrapper.reiseId(12);
+            productWrapper.reiseId(15);
         }
     }
 

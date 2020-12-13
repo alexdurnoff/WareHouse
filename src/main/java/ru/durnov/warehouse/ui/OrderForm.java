@@ -186,9 +186,11 @@ public class OrderForm extends AbstractPane {
     }
 
     public void save() throws SQLException {
-        setupOrderProperties();
-        this.isSaved = true;
-        orderDao.addEntity(order);
+        if (! isSaved ){
+            setupOrderProperties();
+            this.isSaved = true;
+            orderDao.addEntity(order);
+        }
     }
 
     public void setupOrderProperties(){

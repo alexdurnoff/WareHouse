@@ -16,7 +16,7 @@ public class StoreComparator implements Comparator<Entity> {
     private int parseNumberStore(String title) {
         int result;
         try{
-            int index = title.indexOf("№");
+            int index = title.indexOf(" ");
             String numberStr = title.substring(index + 1);
             result = Integer.parseInt(numberStr);
         } catch(NumberFormatException exception){
