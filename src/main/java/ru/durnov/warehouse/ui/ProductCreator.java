@@ -14,7 +14,7 @@ public class ProductCreator extends SimpleEntityEdit{
     private final TextField productTitle;
     private final TextField productCoast;
     private final ComboBox<String> choiceUnit;
-    private String unit;
+    private String unit = "кг";
 
     public ProductCreator(ProductPane pane) {
         super(pane, new Product("", 0.0));
@@ -39,7 +39,11 @@ public class ProductCreator extends SimpleEntityEdit{
         this.choiceUnit = new ComboBox<>();
         this.choiceUnit.getItems().addAll("кг", "шт.");
         this.choiceUnit.setValue("кг");
-        this.choiceUnit.setOnAction(ae -> this.unit = choiceUnit.getValue());
+        System.out.println(choiceUnit.getValue());
+        this.choiceUnit.setOnAction(ae -> {
+            System.out.println(choiceUnit.getValue());
+            this.unit = choiceUnit.getValue();
+        });
     }
 
     @Override

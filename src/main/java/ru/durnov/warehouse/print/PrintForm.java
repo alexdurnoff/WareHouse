@@ -111,7 +111,7 @@ public class PrintForm implements Cloneable {
         toRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label fromLeftLabel = new Label("От");
         fromLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
-        Label fromRightLabel = new Label("ИП Соловьев C.А.");
+        Label fromRightLabel = new Label("ИП Соловьев А.С.");
         fromRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label producerLabel = new Label("Сдал");
         Label consumerLabel = new Label("Принял");
