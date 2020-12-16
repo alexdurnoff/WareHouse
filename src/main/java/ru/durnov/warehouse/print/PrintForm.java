@@ -16,6 +16,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import ru.durnov.warehouse.entity.*;
 
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,15 +29,33 @@ public class PrintForm implements Cloneable {
     private GridPane gridPane;
     private TableView<ProductWrapper> tableView;
     private ObservableList<ProductWrapper> productWrappers;
+    private String companyName;
 
     public PrintForm(Order order) {
+        this.companyName = getCompanyName();
         this.order = order;
-        /*this.gridPane = new GridPane();
-        this.tableView = new TableView<>();
-        setupTableView();
-        setupGridPane();*/
         this.productWrappers = getProductWrapperList();
         setupGridPaneAndTableView();
+    }
+
+    public String getCompanyName() {
+        String name = null;
+        try {
+            List<String> stringList = Files.readAllLines(Paths.get("db/Наименование поставщика"));
+            name = stringList.get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
+
+    public void setCompanyName(String name){
+        this.companyName = name;
+        try (FileWriter fileWriter = new FileWriter(Paths.get("db/Наименование поставщика").toFile(), false)) {
+            fileWriter.write(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setupGridPaneAndTableView(){
@@ -111,7 +133,8 @@ public class PrintForm implements Cloneable {
         toRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label fromLeftLabel = new Label("От");
         fromLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
-        Label fromRightLabel = new Label("ИП Соловьев А.С.");
+        //Label fromRightLabel = new Label("ИП Соловьев А.С.");
+        Label fromRightLabel = new Label(this.companyName);
         fromRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label producerLabel = new Label("Сдал");
         Label consumerLabel = new Label("Принял");
