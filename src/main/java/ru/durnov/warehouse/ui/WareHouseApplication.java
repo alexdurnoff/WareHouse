@@ -1,9 +1,11 @@
 package ru.durnov.warehouse.ui;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -24,6 +26,7 @@ public class WareHouseApplication extends Application {
     private EntityDaoService orderDao;
     private List<Button> buttonList;
     private OrderArchivPane orderArchivPane;
+    private ComboBox<String> comboBox;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,7 +61,7 @@ public class WareHouseApplication extends Application {
     }
 
     private void addButtons(){
-        Button productButton = new Button("База товаров");
+        /*Button productButton = new Button("База товаров");
         productButton.setOnAction(ae -> {
             try {
                 showPane(new ProductPane(this.productDao));
@@ -73,6 +76,26 @@ public class WareHouseApplication extends Application {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+        });*/
+        List<String> options = new ArrayList<>();
+        options.add("База товаров");options.add("База магазинов");
+        this.comboBox = new ComboBox<String>(FXCollections.observableList(options));
+        this.comboBox.setPromptText("Опции");
+        comboBox.setOnAction(ae -> {
+            String str = comboBox.getSelectionModel().getSelectedItem();
+            if (str.equals("База товаров")) {
+                try {
+                    showPane(new ProductPane(this.productDao));
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            } else if (str.equals("База магазинов")){
+                try {
+                    showPane(new StorePane(this.storeDao));
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         });
         Button orderButton = new Button("Создать накладную");
         orderButton.setOnAction(ae -> {
@@ -82,22 +105,13 @@ public class WareHouseApplication extends Application {
                 throwables.printStackTrace();
             }
         });
-        /*Button orderArchivButton = new Button("Архив накладных");
-        orderArchivButton.setOnAction(ae -> {
-            try {
-                showPane(new OrderArchivPane(this.orderDao));
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });*/
-        rootNode.add(productButton, 0,0);
-        rootNode.add(storeButton, 1, 0);
-        rootNode.add(orderButton, 2, 0);
-        //rootNode.add(orderArchivButton, 3, 0);
-        this.buttonList.add(productButton);
-        this.buttonList.add(storeButton);
+        /*rootNode.add(productButton, 0,0);
+        rootNode.add(storeButton, 1, 0);*/
+        rootNode.add(orderButton, 0, 0);
+        rootNode.add(comboBox, 2, 0);
+       /* this.buttonList.add(productButton);
+        this.buttonList.add(storeButton);*/
         this.buttonList.add(orderButton);
-        //this.buttonList.add(orderArchivButton);
     }
 
     private void showPane(AbstractPane pane) throws SQLException {
@@ -162,6 +176,7 @@ public class WareHouseApplication extends Application {
     }
 
     private void removeAllButtons() {
+        rootNode.getChildren().remove(this.comboBox);
         for (Button button : buttonList) rootNode.getChildren().remove(button);
         this.buttonList = new ArrayList<>();
     }
