@@ -61,22 +61,6 @@ public class WareHouseApplication extends Application {
     }
 
     private void addButtons(){
-        /*Button productButton = new Button("База товаров");
-        productButton.setOnAction(ae -> {
-            try {
-                showPane(new ProductPane(this.productDao));
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
-        Button storeButton = new Button("База магазинов");
-        storeButton.setOnAction(ae -> {
-            try {
-                showPane(new StorePane(this.storeDao));
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });*/
         List<String> options = new ArrayList<>();
         options.add("База товаров");options.add("База магазинов");
         this.comboBox = new ComboBox<String>(FXCollections.observableList(options));
@@ -105,12 +89,8 @@ public class WareHouseApplication extends Application {
                 throwables.printStackTrace();
             }
         });
-        /*rootNode.add(productButton, 0,0);
-        rootNode.add(storeButton, 1, 0);*/
         rootNode.add(orderButton, 0, 0);
         rootNode.add(comboBox, 2, 0);
-       /* this.buttonList.add(productButton);
-        this.buttonList.add(storeButton);*/
         this.buttonList.add(orderButton);
     }
 
