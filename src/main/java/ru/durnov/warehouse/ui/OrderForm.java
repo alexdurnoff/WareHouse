@@ -28,6 +28,7 @@ public class OrderForm extends AbstractPane {
     private int rowCount;
     private boolean isSaved;
     private boolean dontSave;
+    private Label summValueLabel;
 
 
     public OrderForm(EntityDaoService orderDao, EntityDaoService productDao, EntityDaoService storeDao) throws SQLException {
@@ -44,6 +45,7 @@ public class OrderForm extends AbstractPane {
         this.order = new Order(number + 1, store);
         this.rowCount = 0;
         this.isSaved = false;
+        this.summValueLabel = new Label();
     }
 
     private int getCurrentNumberForNewOrder() throws SQLException {
@@ -89,9 +91,12 @@ public class OrderForm extends AbstractPane {
     public void show(){
         addheaderLine();
         addProductLines();
+        addSummLine();
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
     }
+
+
 
     @Override
     public void removeEntityByTitle(Entity entity) throws SQLException {
@@ -154,10 +159,13 @@ public class OrderForm extends AbstractPane {
         weigthTextField.textProperty().addListener((observable,oldValue, newValue) -> {
             try {
                 double productWeigth = Double.parseDouble(weigthTextField.getText().replace(',', '.'));
+                product.setWeight(productWeigth);
                 double productCoast = Double.parseDouble(coastLabel.getText().replace(',', '.'));
-                double sum = productWeigth*productCoast;
-                String sumString = String.format("%.2f", sum);
+                double summ = productWeigth*productCoast;
+                String sumString = String.format("%.2f", summ);
                 sumLabel.setText(sumString);
+                calculateSumm();
+                this.summValueLabel.setText(String.format("%.2f", this.order.getSumm()));
             } catch (NumberFormatException e) {
                 NumberFormatExceptionWindow.show();
             }
@@ -166,6 +174,23 @@ public class OrderForm extends AbstractPane {
         this.add(coastLabel, 3, rowCount);
         this.add(sumLabel, 4, rowCount);
         rowCount++;
+    }
+
+    private void addSummLine() {
+        Label summNameLabel = new Label("Итого");
+        this.summValueLabel.setText(String.format("%.2f", this.order.getSumm()));
+        this.add(summNameLabel, 1, rowCount);
+        this.add(this.summValueLabel, 4, rowCount);
+        rowCount++;
+    }
+
+    private void calculateSumm(){
+        double summ = 0.;
+        for (Entity entity : productList) {
+            Product product = (Product) entity;
+            summ += (product.getCoast()*product.getWeight());
+        }
+        this.order.setSumm(summ);
     }
 
 
@@ -201,7 +226,7 @@ public class OrderForm extends AbstractPane {
         this.order.getProductList().clear();
         this.order.getProductWeigthMap().clear();
         int productNumber = 0; //Переменная для сортировки продуктов в накладной
-        for (int i = 6; i <children.size(); i = i + 5){
+        for (int i = 6; i <children.size() - 2; i = i + 5){
             int k = i + 1;
             TextField textField = (TextField) children.get(k);
             if (textField.getText().equals("")) break;

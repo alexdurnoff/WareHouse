@@ -9,7 +9,7 @@ public class Order extends Entity {
     private final int id;
     private String date;
     private Store store;
-
+    private double summ = 0.00;
 
     public Order(int id, Store store) {
         super("");
@@ -36,6 +36,7 @@ public class Order extends Entity {
         this.productList.add(product);
         this.productList.sort(new ProductNumberComparator());
         this.productWeigthMap.put(product, weigth);
+        this.summ += weigth;
     }
 
     public Map<Product, Double> getProductWeigthMap(){
@@ -76,6 +77,18 @@ public class Order extends Entity {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public void setSumm(double summ){
+        this.summ = summ;
+    }
+
+    public double getSumm(){
+        return this.summ;
+    }
+
+    public void incrementSumm(double summ){
+        this.summ += summ;
     }
 
 }

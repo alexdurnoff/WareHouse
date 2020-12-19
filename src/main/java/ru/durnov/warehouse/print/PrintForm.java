@@ -30,13 +30,23 @@ public class PrintForm implements Cloneable {
     private TableView<ProductWrapper> tableView;
     private ObservableList<ProductWrapper> productWrappers;
     private String companyName;
+    private double summ;
+
 
     public PrintForm(Order order) {
         this.companyName = getCompanyName();
         this.order = order;
         this.productWrappers = getProductWrapperList();
+        calculateSumm();
         setupGridPaneAndTableView();
     }
+
+    private void calculateSumm() {
+        for (ProductWrapper productWrapper : productWrappers) {
+            summ += productWrapper.getProduct().getCoast()*productWrapper.getProduct().getWeight();
+        }
+    }
+
 
     public String getCompanyName() {
         String name = null;
@@ -133,11 +143,12 @@ public class PrintForm implements Cloneable {
         toRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label fromLeftLabel = new Label("От");
         fromLeftLabel.setAlignment(Pos.BASELINE_RIGHT);
-        //Label fromRightLabel = new Label("ИП Соловьев А.С.");
         Label fromRightLabel = new Label(this.companyName);
         fromRightLabel.setAlignment(Pos.BASELINE_LEFT);
         Label producerLabel = new Label("Сдал");
         Label consumerLabel = new Label("Принял");
+        Label summNameLabel = new Label("Итого");
+        Label summValueLabel = new Label(String.format("%.2f", this.summ));
         this.gridPane.add(dateLabel, 0, 0, 3, 1);
         this.gridPane.add(orderTitleLabel, 0, 1,3,1);
         this.gridPane.add(toLeftLabel, 0, 2);
@@ -145,8 +156,10 @@ public class PrintForm implements Cloneable {
         this.gridPane.add(fromLeftLabel, 0, 3);
         this.gridPane.add(fromRightLabel, 1, 3);
         this.gridPane.add(this.tableView, 0, 4, 3, 1);
-        this.gridPane.add(producerLabel, 0,5);
-        this.gridPane.add(consumerLabel, 2, 5);
+        this.gridPane.add(summNameLabel, 0, 5);
+        this.gridPane.add(summValueLabel, 2, 5);
+        this.gridPane.add(producerLabel, 0,6);
+        this.gridPane.add(consumerLabel, 2, 6);
         this.getGridPane().setVgap(10);
     }
 
@@ -159,9 +172,6 @@ public class PrintForm implements Cloneable {
         GridPane printPane = new GridPane();
         printPane.getTransforms().add(new Scale(0.9,0.9));
         addPrintFormsToGridPane(printPane, printForm1);
-        /*printPane.add(this.getGridPane(), 0, 0);
-        printPane.add(printForm1.getGridPane(), 2, 0);
-        printPane.setHgap(20);*/
         boolean printed = job.printPage(pageLayout, printPane);
         if (printed){
             job.endJob();
