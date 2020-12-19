@@ -30,7 +30,7 @@ public class ProductWrapper {
     public void setWeigth(Double weigth) {
         this.weigth = weigth;
         this.summ =this.weigth * this.coast;
-        this.convert = String.format("%.2f", this.weigth);
+        this.convert = String.format("%.3f", this.weigth);
     }
 
     public void setCoast(Double coast) {

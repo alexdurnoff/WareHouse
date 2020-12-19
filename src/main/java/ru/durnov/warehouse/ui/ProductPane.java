@@ -10,6 +10,7 @@ import ru.durnov.warehouse.entity.Product;
 import ru.durnov.warehouse.entity.ProductComparator;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 public class ProductPane extends AbstractPane {
@@ -36,6 +37,7 @@ public class ProductPane extends AbstractPane {
     @Override
     public void show() throws SQLException {
         this.productList = entityDaoService.getAllEntity();
+        this.productList.sort(new ProductComparator());
         addHeader();
         for (int i = 0; i <productList.size(); i++){
             Product product = (Product) productList.get(i);
@@ -57,7 +59,6 @@ public class ProductPane extends AbstractPane {
             this.add(new RemoveEntityButton(product), 4, i+1);
             this.add(new EditProductButton(product), 5, i+1);
         }
-        //this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
     }

@@ -2,6 +2,7 @@ package ru.durnov.warehouse.print;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.print.*;
 import javafx.scene.Node;
@@ -11,13 +12,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import ru.durnov.warehouse.entity.*;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -71,7 +72,6 @@ public class PrintForm implements Cloneable {
     public void setupGridPaneAndTableView(){
         this.gridPane = new GridPane();
         this.tableView = new TableView<>();
-        //this.productWrappers = getProductWrapperList();
         setupTableView();
         setupGridPane();
     }
@@ -88,8 +88,6 @@ public class PrintForm implements Cloneable {
     }
 
     private void setupTableView() {
-        //ObservableList<ProductWrapper> productWrappers = getProductWrapperList();
-        //this.productWrappers = getProductWrapperList();
         TableColumn<ProductWrapper,Integer> numberColumn = new TableColumn<>("№ п.п");
         numberColumn.setPrefWidth(50);
         TableColumn<ProductWrapper,String> titleColumn = new TableColumn<>("Наименование");
@@ -156,10 +154,13 @@ public class PrintForm implements Cloneable {
         this.gridPane.add(fromLeftLabel, 0, 3);
         this.gridPane.add(fromRightLabel, 1, 3);
         this.gridPane.add(this.tableView, 0, 4, 3, 1);
-        this.gridPane.add(summNameLabel, 0, 5);
-        this.gridPane.add(summValueLabel, 2, 5);
-        this.gridPane.add(producerLabel, 0,6);
-        this.gridPane.add(consumerLabel, 2, 6);
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(producerLabel, consumerLabel, summNameLabel, summValueLabel);
+        producerLabel.setPadding(new Insets(0,80,0,0));
+        consumerLabel.setPadding(new Insets(0,140,0,0));
+        summNameLabel.setPadding(new Insets(0,10,0,0));
+        summValueLabel.setPadding(new Insets(0,40,0,0));
+        this.gridPane.add(hBox,0,5, 3, 1 );
         this.getGridPane().setVgap(10);
     }
 
