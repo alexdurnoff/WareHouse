@@ -56,7 +56,14 @@ public class ProductChooserPane {
             label.setAlignment(Pos.CENTER);
             productChooser.add(label, 1, i + 1);
             ProductCheckBox productCheckBox = new ProductCheckBox(product);
-            productCheckBox.setOnAction(ae -> choosedProductSet.add(productCheckBox.getProduct()));
+            productCheckBox.setOnAction(ae -> {
+                if (productCheckBox.isSelected()){
+                    choosedProductSet.add(productCheckBox.getProduct());
+                } else {
+                    choosedProductSet.remove(productCheckBox.getProduct());
+                }
+
+            });
             productChooser.add(productCheckBox, 2, i +1);
         }
         i++;
