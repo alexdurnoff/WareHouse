@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
+import ru.durnov.warehouse.entity.ProductComparator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ProductChooserPane {
     public ProductChooserPane(OrderForm orderForm){
         this.orderForm = orderForm;
         this.productList = this.orderForm.getProductList();
+        this.productList.sort(new ProductComparator());
     }
 
     public void addEntityToEntityList() {
