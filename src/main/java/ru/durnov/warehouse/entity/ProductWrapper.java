@@ -31,6 +31,9 @@ public class ProductWrapper {
         this.weigth = weigth;
         this.summ =this.weigth * this.coast;
         this.convert = String.format("%.3f", this.weigth);
+        if (convert.charAt(convert.length() -1) == '0') convert = convert.substring(0, convert.length()-1);
+        if (convert.charAt(convert.length() -1) == '0') convert = convert.substring(0, convert.length()-1);
+        if (convert.charAt(convert.length() -1) == '0') convert = convert.substring(0, convert.length()-2);
     }
 
     public void setCoast(Double coast) {
