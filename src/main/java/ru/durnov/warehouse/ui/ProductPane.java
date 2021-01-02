@@ -1,9 +1,12 @@
 package ru.durnov.warehouse.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import ru.durnov.warehouse.daoservice.EntityDaoService;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
@@ -15,6 +18,8 @@ import java.util.List;
 
 public class ProductPane extends AbstractPane {
     private List<Entity> productList;
+    private GridPane gridPane;
+    private ScrollPane scrollPane;
 
     public ProductPane(EntityDaoService productDao){
         super();
@@ -22,6 +27,7 @@ public class ProductPane extends AbstractPane {
         this.entityDaoService = productDao;
         this.message = "Вы уверены, что хотите удалить этот продукт?";
         this.removeEntityMessage = "Удалить продукт";
+
     }
 
     @Override
@@ -36,6 +42,11 @@ public class ProductPane extends AbstractPane {
 
     @Override
     public void show() throws SQLException {
+        this.gridPane = new GridPane();
+        this.scrollPane = new ScrollPane(gridPane);
+        this.scrollPane.setPadding(new Insets(5,5,5,5));
+        this.scrollPane.hbarPolicyProperty().set(ScrollPane.ScrollBarPolicy.NEVER);
+        this.add(scrollPane, 0, 0);
         this.productList = entityDaoService.getAllEntity();
         this.productList.sort(new ProductComparator());
         addHeader();
@@ -44,22 +55,22 @@ public class ProductPane extends AbstractPane {
             Label label = new Label(String.valueOf(i + 1));
             label.setPrefWidth(30);
             label.setAlignment(Pos.CENTER);
-            this.add(label,0, i+1);
+            this.gridPane.add(label,0, i+1);
             TextField titleTextField = new TextField(productList.get(i).getTitle());
             titleTextField.setPrefWidth(270);
-            this.add(titleTextField, 1, i+1);
+            this.gridPane.add(titleTextField, 1, i+1);
             TextField unitTextField = new TextField(String.valueOf(product.getUnit()));
-            unitTextField.setPrefWidth(70);
+            unitTextField.setPrefWidth(50);
             unitTextField.setAlignment(Pos.CENTER);
-            this.add(unitTextField, 2, i+1);
+            this.gridPane.add(unitTextField, 2, i+1);
             TextField coastTextField = new TextField(String.valueOf(product.getCoast()));
             coastTextField.setPrefWidth(70);
             coastTextField.setAlignment(Pos.CENTER);
-            this.add(coastTextField, 3, i+1);
-            this.add(new RemoveEntityButton(product), 4, i+1);
-            this.add(new EditProductButton(product), 5, i+1);
+            this.gridPane.add(coastTextField, 3, i+1);
+            this.gridPane.add(new RemoveEntityButton(product), 4, i+1);
+            this.gridPane.add(new EditProductButton(product), 5, i+1);
         }
-        this.setAlignment(Pos.CENTER);
+        this.gridPane.setAlignment(Pos.CENTER);
         this.setWidth(USE_PREF_SIZE);
     }
 
@@ -72,22 +83,22 @@ public class ProductPane extends AbstractPane {
         productTitlelabel.setPrefWidth(270);
         productTitlelabel.setAlignment(Pos.CENTER);
         Label unitLabel = new Label("кг/шт");
-        unitLabel.setPrefWidth(70);
+        unitLabel.setPrefWidth(50);
         unitLabel.setAlignment(Pos.CENTER);
         Label coastLabel = new Label("Цена");
         coastLabel.setPrefWidth(70);
         coastLabel.setAlignment(Pos.CENTER);
-        this.add(numberLabel, 0, 0);
-        this.add(productTitlelabel, 1, 0);
-        this.add(unitLabel, 2, 0);
-        this.add(coastLabel, 3, 0);
+        this.gridPane.add(numberLabel, 0, 0);
+        this.gridPane.add(productTitlelabel, 1, 0);
+        this.gridPane.add(unitLabel, 2, 0);
+        this.gridPane.add(coastLabel, 3, 0);
     }
 
     class EditProductButton extends Button{
         private Product product;
 
         EditProductButton(Product product){
-            super("Редактировать товар");
+            super("Редактировать");
             this.product = product;
             this.setOnAction(ae -> editProduct(this.product));
         }
@@ -97,5 +108,6 @@ public class ProductPane extends AbstractPane {
         new ProductEditorDialog(product).showAndWait();
         this.entityDaoService.updateProduct(product);
     }
+
 
 }

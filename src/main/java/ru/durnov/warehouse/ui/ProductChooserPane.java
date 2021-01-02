@@ -1,11 +1,13 @@
 package ru.durnov.warehouse.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ru.durnov.warehouse.entity.Entity;
 import ru.durnov.warehouse.entity.Product;
@@ -69,7 +71,13 @@ public class ProductChooserPane {
             productChooser.add(productCheckBox, 2, i +1);
         }
         i++;
-        productChooser.add(buttonOk,0,i+1);
+        //productChooser.add(buttonOk,0,i+1);
+        HBox hBox = new HBox();
+        hBox.getChildren().add(buttonOk);
+        buttonOk.setPrefWidth(40);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.setPadding(new Insets(10,10,10,10));
+        rootNode.add(hBox, 0, 2, 2, 1);
         stage.show();
     }
 
