@@ -45,7 +45,8 @@ public class ProductPane extends AbstractPane {
         this.gridPane = new GridPane();
         this.scrollPane = new ScrollPane(gridPane);
         this.scrollPane.setPadding(new Insets(5,5,5,5));
-        this.scrollPane.hbarPolicyProperty().set(ScrollPane.ScrollBarPolicy.NEVER);
+        //this.scrollPane.hbarPolicyProperty().set(ScrollPane.ScrollBarPolicy.NEVER);
+        this.scrollPane.vbarPolicyProperty().set(ScrollPane.ScrollBarPolicy.ALWAYS);
         this.add(scrollPane, 0, 0);
         this.productList = entityDaoService.getAllEntity();
         this.productList.sort(new ProductComparator());
