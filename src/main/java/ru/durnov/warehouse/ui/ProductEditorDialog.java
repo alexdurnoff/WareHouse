@@ -20,7 +20,9 @@ public class ProductEditorDialog extends Dialog<Boolean> {
             }
         });
         TextField unitTextField = new TextField(product.getUnit());
-        unitTextField.setOnAction(ae -> product.setUnit(unitTextField.getText()));
+        unitTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            product.setUnit(newValue);
+        }));
         ButtonType buttonTypeOk = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         GridPane gridPane = new GridPane();
         gridPane.add(new Label("Наименование"), 0, 0);

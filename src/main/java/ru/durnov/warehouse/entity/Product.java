@@ -1,10 +1,14 @@
 package ru.durnov.warehouse.entity;
 
+import javafx.scene.control.Button;
+
 public class Product extends Entity{
     private double weight;
     private double coast;
     private int numberInOrder;
     private String unit = "кг";
+    private final Button deleteButton = new Button("Удалить продукт");
+    private final Button editButton = new Button("Редактировать продукт");
 
     public Product(String title){
         super(title);
@@ -79,5 +83,13 @@ public class Product extends Entity{
 
     public String getUnit() {
         return unit;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
+    public Button getEditButton() {
+        return editButton;
     }
 }
