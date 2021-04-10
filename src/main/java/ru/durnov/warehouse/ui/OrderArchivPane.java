@@ -140,7 +140,7 @@ public class OrderArchivPane extends AbstractPane {
     private void trimOrderListLast20Orders() {
         int startNumber = this.orderList.size() - 20;
         int stopnumber = this.orderList.size();
-        this.orderList.subList(startNumber, stopnumber);
+        this.orderList = this.orderList.subList(startNumber, stopnumber);
     }
 
 

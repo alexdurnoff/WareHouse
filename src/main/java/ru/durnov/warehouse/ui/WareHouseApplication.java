@@ -49,9 +49,9 @@ public class WareHouseApplication extends Application {
 
     private void setupDao() throws SQLException {
         RealDataBase dataBase = new RealDataBase();
-        this.productDao = new ProductDaoService(dataBase);
-        this.storeDao = new StoreDaoService(dataBase);
-        this.orderDao = new OrderDaoService(dataBase);
+        this.productDao = new ProductDaoServiceWithCache(dataBase);
+        this.storeDao = new StoreDaoServiceWithCache(dataBase);
+        this.orderDao = new OrderDaoServiceWithCache(dataBase);
     }
 
     private List<ColumnConstraints> getColumns() {
