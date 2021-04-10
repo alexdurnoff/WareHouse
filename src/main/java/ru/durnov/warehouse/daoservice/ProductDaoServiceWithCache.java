@@ -27,9 +27,7 @@ public class ProductDaoServiceWithCache implements EntityDaoService{
 
     @Override
     public List<Entity> getAllEntity() throws SQLException {
-        List<Entity> productList = new ArrayList<>();
-        productList.addAll(productSet);
-        return productList;
+        return new ArrayList<>(productSet);
     }
 
     @Override

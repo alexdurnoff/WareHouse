@@ -1,6 +1,5 @@
 package ru.durnov.warehouse.daoservice;
 
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import ru.durnov.warehouse.dao.WareHouseDatabase;
 import ru.durnov.warehouse.entity.Entity;
@@ -30,9 +29,7 @@ public class OrderDaoServiceWithCache implements EntityDaoService{
 
     @Override
     public List<Entity> getAllEntity() throws SQLException {
-        List<Entity> orderList = new ArrayList<>();
-        orderList.addAll(orderSet);
-        return orderList;
+        return new ArrayList<>(orderSet);
     }
 
     @Override
@@ -92,7 +89,9 @@ public class OrderDaoServiceWithCache implements EntityDaoService{
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            productSet.forEach(product -> order.addProduct(product, product.getWeight()));
+            if (productSet != null) {
+                productSet.forEach(product -> order.addProduct(product, product.getWeight()));
+            }
         });
     }
 }
